@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.Toolkit.UI.XamlHost</id>
+    <version>6.1.2</version>
+    <title>Windows Community Toolkit XAMLHost</title>
+    <authors>Microsoft.Toolkit</authors>
+    <owners>Microsoft.Toolkit</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/windows-toolkit/Microsoft.Toolkit.Win32/blob/master/license.md</licenseUrl>
+    <projectUrl>https://github.com/windows-toolkit/Microsoft.Toolkit.Win32</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/windows-toolkit/WindowsCommunityToolkit/master/build/nuget.png</iconUrl>
+    <description>This library provides XAML islands common helpers for WPF and WinForms. It is part of the Windows Community Toolkit.</description>
+    <releaseNotes>https://github.com/windows-toolkit/Microsoft.Toolkit.Win32/releases</releaseNotes>
+    <copyright>(c) .NET Foundation and Contributors.  All rights reserved.</copyright>
+    <tags>XAML Islands XAMLHost</tags>
+    <repository type="git" url="https://github.com/windows-toolkit/Microsoft.Toolkit.Win32" commit="a9299bff94900cb4d4845debcf4971f855865290" />
+    <dependencies>
+      <group targetFramework=".NETCoreApp3.0">
+        <dependency id="Microsoft.Toolkit.Win32.UI.SDK" version="6.1.2" include="Runtime,Compile,Build,Native,ContentFiles,BuildTransitive" />
+        <dependency id="Microsoft.Toolkit.Win32.UI.XamlApplication" version="6.1.2" include="Runtime,Compile,Build,Native,ContentFiles,BuildTransitive" />
+        <dependency id="Microsoft.Windows.SDK.Contracts" version="10.0.18362.2005" include="Runtime,Compile,Build,Native,ContentFiles,BuildTransitive" />
+      </group>
+      <group targetFramework=".NETFramework4.6.2">
+        <dependency id="Microsoft.Toolkit.Win32.UI.SDK" version="6.1.2" include="Runtime,Compile,Build,Native,ContentFiles,BuildTransitive" />
+        <dependency id="Microsoft.Toolkit.Win32.UI.XamlApplication" version="6.1.2" include="Runtime,Compile,Build,Native,ContentFiles,BuildTransitive" />
+        <dependency id="Microsoft.Windows.SDK.Contracts" version="10.0.18362.2005" include="Runtime,Compile,Build,Native,ContentFiles,BuildTransitive" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

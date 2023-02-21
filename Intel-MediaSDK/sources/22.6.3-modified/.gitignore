@@ -1,0 +1,12 @@
+# build folder
+__cmake/
+tests/gold/
+tests/results/
+tests/ted/__pycache__/
+tests/test_results.json
+tools/tracer/gui/obj
+tools/tracer/_build
+.vs
+samples/_build
+tutorials/_build
+*.user

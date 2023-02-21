@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.Toolkit.Wpf.UI.Controls</id>
+    <version>6.1.2</version>
+    <title>Windows Community Toolkit WPF Controls</title>
+    <authors>Microsoft.Toolkit</authors>
+    <owners>Microsoft.Toolkit</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/windows-toolkit/Microsoft.Toolkit.Win32/blob/master/license.md</licenseUrl>
+    <projectUrl>https://github.com/windows-toolkit/Microsoft.Toolkit.Win32</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/windows-toolkit/WindowsCommunityToolkit/master/build/nuget.png</iconUrl>
+    <description>This library provides XAML controls for WPF. It is part of the Windows Community Toolkit.
+
+      Controls:
+
+      -InkCanvas : Defines an area that receives and displays ink strokes.
+      -InkToolbar : Wpf-enabled wrapper for InkToolbar, that Represents a Universal Windows app control containing a customizable and extensible collection of buttons that activate ink-related features in an associated InkCanvas.
+      -MapControl : A set of controls for WPF and UWP for rendering digital maps from different providers (like OpenStreetMap and Bing Maps) and various types of map overlays.
+      -MediaPlayerElement : This controls embeds a view that streams and renders media content such as video in your Windows Forms or WPF desktop application.
+      -SwapChainPanel : Provides a hosting surface, where Microsoft DirectX swap chains provide content that can be rendered into a XAML UI. A SwapChainPanel element is a key component for an app that renders Microsoft DirectX graphics and then presents those visuals within a XAML page.</description>
+    <releaseNotes>https://github.com/windows-toolkit/Microsoft.Toolkit.Win32/releases</releaseNotes>
+    <copyright>(c) .NET Foundation and Contributors.  All rights reserved.</copyright>
+    <tags>Win32 WPF UWP XAML</tags>
+    <repository type="git" url="https://github.com/windows-toolkit/Microsoft.Toolkit.Win32" commit="a9299bff94900cb4d4845debcf4971f855865290" />
+    <dependencies>
+      <group targetFramework=".NETCoreApp3.0">
+        <dependency id="Microsoft.Toolkit.Wpf.UI.XamlHost" version="6.1.2" include="Runtime,Compile,Build,Native,ContentFiles,BuildTransitive" />
+        <dependency id="Microsoft.Windows.SDK.Contracts" version="10.0.18362.2005" include="Runtime,Compile,Build,Native,ContentFiles,BuildTransitive" />
+      </group>
+      <group targetFramework=".NETFramework4.6.2">
+        <dependency id="Microsoft.Toolkit.Wpf.UI.XamlHost" version="6.1.2" include="Runtime,Compile,Build,Native,ContentFiles,BuildTransitive" />
+        <dependency id="Microsoft.Windows.SDK.Contracts" version="10.0.18362.2005" include="Runtime,Compile,Build,Native,ContentFiles,BuildTransitive" />
+      </group>
+    </dependencies>
+    <frameworkReferences>
+      <group targetFramework=".NETCoreApp3.0">
+        <frameworkReference name="Microsoft.WindowsDesktop.App.WPF" />
+      </group>
+    </frameworkReferences>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="PresentationCore" targetFramework=".NETFramework4.6.2" />
+      <frameworkAssembly assemblyName="PresentationFramework" targetFramework=".NETFramework4.6.2" />
+      <frameworkAssembly assemblyName="System.Core" targetFramework=".NETFramework4.6.2" />
+      <frameworkAssembly assemblyName="System.Design" targetFramework=".NETFramework4.6.2" />
+      <frameworkAssembly assemblyName="System" targetFramework=".NETFramework4.6.2" />
+      <frameworkAssembly assemblyName="System.Drawing" targetFramework=".NETFramework4.6.2" />
+      <frameworkAssembly assemblyName="System.Net" targetFramework=".NETFramework4.6.2" />
+      <frameworkAssembly assemblyName="System.Xaml" targetFramework=".NETFramework4.6.2" />
+      <frameworkAssembly assemblyName="WindowsBase" targetFramework=".NETFramework4.6.2" />
+    </frameworkAssemblies>
+  </metadata>
+</package>

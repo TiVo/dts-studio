@@ -1,0 +1,11 @@
+# Build arguments go here.
+# See "gn args <out_dir> --list" for available build arguments.
+is_component_build = false
+is_debug = false
+is_official_build = true
+angle_enable_vulkan = false
+angle_enable_overlay = false
+symbol_level = 0
+target_cpu = "x86"
+treat_warnings_as_errors = false
+chrome_pgo_phase = 0

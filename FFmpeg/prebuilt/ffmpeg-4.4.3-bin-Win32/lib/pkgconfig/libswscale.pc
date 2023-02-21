@@ -1,0 +1,14 @@
+prefix=/c/Private/work/utilitare/ffmpeg/ffmpeg-4.4.3-bin-Win32
+exec_prefix=${prefix}
+libdir=/c/Private/work/utilitare/ffmpeg/ffmpeg-4.4.3-bin-Win32/lib
+includedir=/c/Private/work/utilitare/ffmpeg/ffmpeg-4.4.3-bin-Win32/include
+
+Name: libswscale
+Description: FFmpeg image rescaling library
+Version: 5.9.100
+Requires: 
+Requires.private: libavutil >= 56.70.100
+Conflicts:
+Libs: -L${libdir}  -lswscale 
+Libs.private: 
+Cflags: -I${includedir}

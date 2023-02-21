@@ -1,0 +1,64 @@
+Used the instructions at this page:
+https://trac.ffmpeg.org/wiki/CompilationGuide/MSVC
+
+Building openh264:
+==================
+
+1. Cloned the tag v2.3.1 of openh264 from https://github.com/cisco/openh264.git
+
+2. Launch a command prompt and run the following command:
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsall.bat" amd64
+
+3. Built openh264 with the following command:
+make.exe -i OS=msvc  ARCH=x86_64 USE_ASM=Yes BUILDTYPE=Release
+
+4. Installed openh264 to a custom dir:
+make.exe -i OS=msvc  ARCH=x86_64 USE_ASM=Yes BUILDTYPE=Release DESTDIR=<custom_dir> install
+
+Building ffmpeg:
+================
+
+0. Prerequisites: msys-2 from http://www.mingw.org/
+
+1. Download FFmpeg 4.4.3 from https://ffmpeg.org/releases/ffmpeg-4.4.3.tar.xz
+
+2. Launch a command prompt and run the following command:
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsall.bat" amd64
+
+3. Append the custom dir of opnh264 to the include list with the following command:
+set INCLUDE=%INCLUDE%;<custom_dir>\include
+NOTE: vcvarsall.bat already defines the INCLUDE environment variable. This step
+appends the include subdirectory of openh264 to the INCLUDE environment variable.
+
+4. Append the custom dir of openh264 to the lib list with the following command:
+set LIB=%LIB%;<custom_dir>\lib
+NOTE: vcvarsall.bat already defines the LIB environment variable. This step
+appends the lib subdirectory of openh264 to the LIB environment variable.
+
+5. Launch an MSYS2 shell with:
+"C:\msys64\msys2_shell.cmd" -full-path
+This opens a new MSYS2 shell and inherits all the environment variables of vcvarsall.bat
+and those modified by us. All the following steps will be run in this new window.
+
+6. Append the custom dir openh264 to the PKG_CONFIG_PATH environment variable:
+export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:<custom_dir>/lib/pkgconfig
+NOTE: be sure to use forward slashes instead of backslashes. For example,
+if <custom_dir> used before was C:\Dir1\openh264, now you must use
+/c/Dir1/openh264
+
+7. Decompress the ffmpeg-4.4.3.tar.xz archive to a directory with
+tar xJf ffmpeg-4.4.3.tar.xz.
+
+8. Change the current directory to the one created by the archive decompression.
+
+9. Make a build subdirectory with
+mkdir build-windows-x64
+And change the working directory to build-windows-x64
+
+10. Configure the build with the following command:
+../configure --prefix=/mingw64 --arch=x86_64 --enable-shared --disable-static --enable-asm --enable-libopenh264 --enable-mediafoundation --toolchain=msvc
+
+11. Build ffmpeg with the following command:
+make -j <num_cpu> -O
+NOTE: the -O parameter is useful only for make versions greater than 4.0. For multi-threaded
+builds, it keeps together the messages of various commands.

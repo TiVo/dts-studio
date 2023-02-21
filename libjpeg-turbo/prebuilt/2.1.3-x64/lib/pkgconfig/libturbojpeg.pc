@@ -1,0 +1,10 @@
+prefix=D:/Private/work/utilitare/libjpegturbo/git/libjpeg-turbo.git-x64
+exec_prefix=D:/Private/work/utilitare/libjpegturbo/git/libjpeg-turbo.git-x64
+libdir=D:/Private/work/utilitare/libjpegturbo/git/libjpeg-turbo.git-x64/lib
+includedir=D:/Private/work/utilitare/libjpegturbo/git/libjpeg-turbo.git-x64/include
+
+Name: libturbojpeg
+Description: A SIMD-accelerated JPEG codec that provides the TurboJPEG API
+Version: 2.1.3
+Libs: -L${libdir} -lturbojpeg
+Cflags: -I${includedir}

@@ -1,0 +1,1047 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UniversalWPF</name>
+    </assembly>
+    <members>
+        <member name="T:UniversalWPF.NumberBox">
+            <summary>
+            Represents a control that can be used to display and edit numbers.
+            </summary>
+            <remarks>
+            This control supports validation, increment stepping, and computing inline calculations of basic equations such as multiplication, division, addition, and subtraction.
+            </remarks>
+        </member>
+        <member name="M:UniversalWPF.NumberBox.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UniversalWPF.NumberBox"/> class.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.NumberBox.OnApplyTemplate">
+            <inheritdoc/>
+        </member>
+        <member name="M:UniversalWPF.NumberBox._OnGotFocus(System.Windows.RoutedEventArgs)">
+            <inheritdoc/>
+        </member>
+        <member name="M:UniversalWPF.NumberBox._OnLostFocus(System.Windows.RoutedEventArgs)">
+            <inheritdoc/>
+        </member>
+        <member name="M:UniversalWPF.NumberBox.OnMouseWheel(System.Windows.Input.MouseWheelEventArgs)">
+            <inheritdoc/>
+        </member>
+        <member name="E:UniversalWPF.NumberBox.ValueChanged">
+            <summary>
+            Occurs after the user triggers evaluation of new input by pressing the Enter key, clicking a spin button, or by changing focus.
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.NumberBox.Minimum">
+            <summary>
+            Gets or sets the numerical minimum for <see cref="P:UniversalWPF.NumberBox.Value"/>.
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.NumberBox.MinimumProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.NumberBox.Maximum"/> Dependency Property
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.NumberBox.Maximum">
+            <summary>
+            Gets or sets the numerical maximum for <see cref="P:UniversalWPF.NumberBox.Value"/>.
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.NumberBox.MaximumProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.NumberBox.Maximum"/> Dependency Property
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.NumberBox.Value">
+            <summary>
+            Gets or sets the numeric value of a <see cref="T:UniversalWPF.NumberBox"/>.
+            </summary>
+            <remarks>
+            <see cref="P:UniversalWPF.NumberBox.Text"/> exists to faciliate getting the string representation of this property's numeric contents without the need for type conversion. 
+            Note the content of this property will overwrite the content of Text in initial set up. After the initial set up, changes to one will be 
+            progrogated to the other, but consistently making programmatic changes through this property helps avoid any conceptual misunderstanding 
+            that NumberBox will accept non-numeric characters through the Text property.
+            </remarks>
+        </member>
+        <member name="F:UniversalWPF.NumberBox.ValueProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.NumberBox.Value"/> Dependency Property
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.NumberBox.SmallChange">
+            <summary>
+            Gets or sets the value that is added to or subtracted from Value when a small change is made, such as with an arrow key or scrolling.
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.NumberBox.SmallChangeProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.NumberBox.SmallChange"/> Dependency Property
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.NumberBox.LargeChange">
+            <summary>
+            Gets or sets the value that is added to or subtracted from Value when a large change is made, such as with the PageUP and PageDown keys.
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.NumberBox.LargeChangeProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.NumberBox.LargeChange"/> Dependency Property
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.NumberBox.Text">
+            <summary>
+            Gets or sets the string type representation of the Value property.
+            </summary>
+            <remarks>
+            This property exists to faciliate getting the string representation of Value 's numeric contents without the need for type conversion.
+            Note the content of Value will overwrite the content of this property in initial set up. After the initial set up, changes to one will
+            be progrogated to the other, but consistently making programmatic changes through Value helps avoid any conceptual misunderstanding 
+            that NumberBox will accept non-numeric characters through this property.
+            </remarks>
+        </member>
+        <member name="F:UniversalWPF.NumberBox.TextProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.NumberBox.Text"/> Dependency Property
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.NumberBox.Header">
+            <summary>
+            Gets or sets the content for the control's header.
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.NumberBox.HeaderProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.NumberBox.Header"/> Dependency Property
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.NumberBox.HeaderTemplate">
+            <summary>
+            Gets or sets the <see cref="T:System.Windows.DataTemplate"/> used to display the content of the control's header.
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.NumberBox.HeaderTemplateProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.NumberBox.HeaderTemplate"/> Dependency Property
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.NumberBox.SelectionHighlightColor">
+            <summary>
+            Gets or sets the selection highlight color
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.NumberBox.SelectionHighlightColorProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.NumberBox.SelectionHighlightColor"/> Dependency Property
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.NumberBox.Description">
+            <summary>
+            Gets or sets content that is shown below the control. The content should provide guidance about the input expected by the control.
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.NumberBox.DescriptionProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.NumberBox.Description"/> Dependency Property
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.NumberBox.ValidationMode">
+            <summary>
+            Gets or sets the input validation behavior to invoke when invalid input is entered.
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.NumberBox.ValidationModeProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.NumberBox.ValidationMode"/> Dependency Property
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.NumberBox.SpinButtonPlacementMode">
+            <summary>
+            Gets or sets a value that indicates the placement of buttons used to increment or decrement the Value property.
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.NumberBox.SpinButtonPlacementModeProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.NumberBox.SpinButtonPlacementMode"/> Dependency Property
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.NumberBox.IsWrapEnabled">
+            <summary>
+            Toggles whether line breaking occurs if a line of text extends beyond the available width of the control.
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.NumberBox.IsWrapEnabledProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.NumberBox.IsWrapEnabled"/> Dependency Property
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.NumberBox.AcceptsExpression">
+            <summary>
+            Toggles whether the control will accept and evaluate a basic formulaic expression entered as input.
+            </summary>
+            <remarks>
+            NumberBox uses infix notation to evaluate expressions. In order of precedence, the allowable operators are: ^ * / + -. 
+            Note that parentheses can be used to override precedence rules.
+            </remarks>
+        </member>
+        <member name="F:UniversalWPF.NumberBox.AcceptsExpressionProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.NumberBox.AcceptsExpression"/> Dependency Property
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.NumberBox.NumberFormatter">
+            <summary>
+            Gets or sets the object used to specify the formatting of <see cref="P:UniversalWPF.NumberBox.Value"/>.
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.NumberBox.NumberFormatterProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.NumberBox.NumberFormatter"/> Dependency Property
+            </summary>
+        </member>
+        <member name="T:UniversalWPF.NumberBoxValueChangedEventArgs">
+            <summary>
+            Provides event data for the <see cref="E:UniversalWPF.NumberBox.ValueChanged"/> event.
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.NumberBoxValueChangedEventArgs.OldValue">
+            <summary>
+            Contains the old <see cref="P:UniversalWPF.NumberBox.Value"/> being replaced in a <see cref="T:UniversalWPF.NumberBox"/>.
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.NumberBoxValueChangedEventArgs.NewValue">
+            <summary>
+            Contains the new <see cref="P:UniversalWPF.NumberBox.Value"/> to be set for a <see cref="T:UniversalWPF.NumberBox"/>.
+            </summary>
+        </member>
+        <member name="T:UniversalWPF.NumberBoxValidationMode">
+            <summary>
+            Preconfigured input validation behavior invoked when invalid input is entered.
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.NumberBoxValidationMode.InvalidInputOverwritten">
+            <summary>
+            Invalid input will be overwritten
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.NumberBoxValidationMode.Disabled">
+            <summary>
+            Disabled
+            </summary>
+        </member>
+        <member name="T:UniversalWPF.NumberBoxSpinButtonPlacementMode">
+            <summary>
+            Placement configuration for spin buttons which are used to increment or decrement the Value of a NumberBox.
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.NumberBoxSpinButtonPlacementMode.Hidden">
+            <summary>
+            Hidden
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.NumberBoxSpinButtonPlacementMode.Compact">
+            <summary>
+            Compact
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.NumberBoxSpinButtonPlacementMode.Inline">
+            <summary>
+            Inline
+            </summary>
+        </member>
+        <member name="T:UniversalWPF.INumberFormatter2">
+            <summary>
+            An interface that returns a string representation of a provided value, using distinct format methods to format several data types.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.INumberFormatter2.FormatDouble(System.Double)">
+            <summary>
+            Returns a string representation of a Double value.
+            </summary>
+            <param name="value">The Double value to be formatted.</param>
+            <returns>A string that represents the value.</returns>
+        </member>
+        <member name="M:UniversalWPF.INumberFormatter2.FormatInt(System.Int64)">
+            <summary>
+            Returns a string representation of an Int64 value.
+            </summary>
+            <param name="value">The Int64 value to be formatted.</param>
+            <returns>A string that represents the value.</returns>
+        </member>
+        <member name="M:UniversalWPF.INumberFormatter2.FormatUInt(System.UInt64)">
+            <summary>
+            Returns a string representation of a UInt64 value.
+            </summary>
+            <param name="value">The UInt64 value to be formatted.</param>
+            <returns>A string that represents the value.</returns>
+        </member>
+        <member name="T:UniversalWPF.INumberParser">
+            <summary>
+            An interface that parses a string representation of a numeric value.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.INumberParser.ParseDouble(System.String)">
+            <summary>
+            Attempts to parse a string representation of a Double numeric value.
+            </summary>
+            <param name="text">The text to be parsed.</param>
+            <returns>If successful, a Double that corresponds to the string representation, and otherwise null.</returns>
+        </member>
+        <member name="M:UniversalWPF.INumberParser.ParseInt(System.String)">
+            <summary>
+            Attempts to parse a string representation of an integer numeric value.
+            </summary>
+            <param name="text">The text to be parsed.</param>
+            <returns>If successful, an Int64 that corresponds to the string representation, and otherwise null.</returns>
+        </member>
+        <member name="M:UniversalWPF.INumberParser.ParseUInt(System.String)">
+            <summary>
+            Attempts to parse a string representation of an unsigned integer numeric value.
+            </summary>
+            <param name="text">The text to be parsed.</param>
+            <returns>If successful, a UInt64 that corresponds to the string representation, and otherwise null.</returns>
+        </member>
+        <member name="T:UniversalWPF.DecimalFormatter">
+            <summary>
+            Formats and parses decimal numbers.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.DecimalFormatter.#ctor">
+            <summary>
+            Creates a DecimalFormatter object and initializes it to default values.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.DecimalFormatter.#ctor(System.Globalization.CultureInfo)">
+            <summary>
+            Creates a <see cref="T:UniversalWPF.DecimalFormatter"/> object initialized by a language list and a geographic region.
+            </summary>
+            <param name="culture">The language culture to use for formatting</param>
+        </member>
+        <member name="M:UniversalWPF.DecimalFormatter.FormatDouble(System.Double)">
+            <inheritdoc />
+        </member>
+        <member name="M:UniversalWPF.DecimalFormatter.FormatInt(System.Int64)">
+            <inheritdoc />
+        </member>
+        <member name="M:UniversalWPF.DecimalFormatter.FormatUInt(System.UInt64)">
+            <inheritdoc />
+        </member>
+        <member name="M:UniversalWPF.DecimalFormatter.ParseDouble(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:UniversalWPF.DecimalFormatter.ParseInt(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:UniversalWPF.DecimalFormatter.ParseUInt(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="P:UniversalWPF.DecimalFormatter.FractionDigits">
+            <summary>
+            Gets or sets the minimum number of digits to display for the fraction part of the number.
+            </summary>
+            <value>The minimum number of digits to display.</value>
+        </member>
+        <member name="P:UniversalWPF.DecimalFormatter.IntegerDigits">
+            <summary>
+            Gets or sets the minimum number of digits to display for the integer part of the number.
+            </summary>
+            <value>The minimum number of digits to display.</value>
+        </member>
+        <member name="P:UniversalWPF.DecimalFormatter.GeographicRegion">
+            <summary>
+            Gets the region that is used when formatting and parsing decimal numbers.
+            </summary>
+            <value>The region that is used.</value>
+        </member>
+        <member name="P:UniversalWPF.DecimalFormatter.IsDecimalPointAlwaysDisplayed">
+            <summary>
+            Gets or sets whether the decimal point of the number should always be displayed.
+            </summary>
+            <value>True if the decimal point of the number should always be displayed, and false otherwise.</value>
+        </member>
+        <member name="P:UniversalWPF.DecimalFormatter.IsGrouped">
+            <summary>
+            Gets or sets whether the integer part of the number should be grouped.
+            </summary>
+            <value>True if the integer part of the number should be grouped, and false otherwise.</value>
+        </member>
+        <member name="P:UniversalWPF.DecimalFormatter.IsZeroSigned">
+            <summary>
+            Gets or sets whether -0 is formatted as "-0" or "0".
+            </summary>
+            <value>True if -0 is formatted as "-0", and false if -0 is formatted as "0".</value>
+            <remarks>
+            <para>You can set this property to specify that DecimalFormatter display negative 0 as "-0". This enables the scenario where you wish to display "-0" when it represents the rounded value of some small negative value (such as -0.00001).</para>
+            <para>This property defaults to false to be consistent with Windows 8 and Windows Server 2012, in which -0 was always formatted as "0".</para>
+            </remarks>
+        </member>
+        <member name="P:UniversalWPF.DecimalFormatter.Languages">
+            <summary>
+            Gets the priority list of language identifiers that is used when formatting and parsing decimal numbers.
+            </summary>
+            <value>The priority list of language identifiers.</value>
+        </member>
+        <member name="P:UniversalWPF.DecimalFormatter.SignificantDigits">
+            <summary>
+            Gets or sets the current padding to significant digits when a decimal number is formatted.
+            </summary>
+            <value>The number of significant digits.</value>
+            <remarks>Trailing zeros are added to the format until the given number of significant digits is exhausted. If there are more digits, this property does not cause them to be truncated.</remarks>
+        </member>
+        <member name="P:UniversalWPF.DecimalFormatter.ResolvedLanguage">
+            <summary>
+            Gets the language that was most recently used to format or parse decimal values.
+            </summary>
+            <value>The language from the priority list of language identifiers that was most recently used to format or parse decimal values.</value>
+        </member>
+        <member name="T:UniversalWPF.RelativePanel">
+             <summary>
+             Defines an area within which you can position and align child objects in relation
+             to each other or the parent panel.
+             </summary>
+             <remarks>
+             <para><b>Default position</b></para>
+                <para>By default, any unconstrained element declared as a child of the RelativePanel is given the entire
+                available space and positioned at the(0, 0) coordinates(upper left corner) of the panel.So, if you
+             are positioning a second element relative to an unconstrained element, keep in mind that the second
+             element might get pushed out of the panel.
+             </para>
+            <para><b>Conflicting relationships</b></para>
+                <para>
+                If you set multiple relationships that target the same edge of an element, you might have conflicting
+             relationships in your layout as a result.When this happens, the relationships are applied in the
+                following order of priority:
+                  •   Panel alignment relationships (AlignTopWithPanel, AlignLeftWithPanel, …) are applied first.
+                  •   Sibling alignment relationships(AlignTopWith, AlignLeftWith, …) are applied second.
+                  •   Sibling positional relationships(Above, Below, RightOf, LeftOf) are applied last.
+             </para>
+             <para>
+             The panel-center alignment properties(AlignVerticalCenterWith, AlignHorizontalCenterWithPanel, ...) are
+             typically used independently of other constraints and are applied if there is no conflict.
+            </para>
+             <para>
+             The HorizontalAlignment and VerticalAlignment properties on UI elements are applied after relationship
+             properties are evaluated and applied. These properties control the placement of the element within the
+             available size for the element, if the desired size is smaller than the available size.
+             </para>
+             </remarks>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.GetAbove(System.Windows.DependencyObject)">
+            <summary>
+            Gets the value of the RelativePanel.Above XAML attached property for the target element.
+            </summary>
+            <param name="obj">The object from which the property value is read.</param>
+            <returns>
+            The RelativePanel.Above XAML attached property value of the specified object.
+            (The element to position this element above.)
+            </returns>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.SetAbove(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            Sets the value of the RelativePanel.Above XAML attached property for a target element.
+            </summary>
+            <param name="obj">The object to which the property value is written.</param>
+            <param name="value">The value to set. (The element to position this element above.)</param>
+        </member>
+        <member name="F:UniversalWPF.RelativePanel.AboveProperty">
+            <summary>
+             Identifies the <see cref="F:UniversalWPF.RelativePanel.AboveProperty"/> XAML attached property.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.GetAlignBottomWithPanel(System.Windows.DependencyObject)">
+            <summary>
+            Gets the value of the RelativePanel.AlignBottomWithPanel XAML attached property for the target element.
+            </summary>
+            <param name="obj">The object from which the property value is read.</param>
+            <returns>
+            The RelativePanel.AlignBottomWithPanel XAML attached property value of the specified
+               object. (true to align this element's bottom edge with the panel's bottom edge;
+            otherwise, false.)
+            </returns>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.SetAlignBottomWithPanel(System.Windows.DependencyObject,System.Boolean)">
+            <summary>
+            Sets the value of the RelativePanel.Above XAML attached property for a target element.
+            </summary>
+            <param name="obj">The object to which the property value is written.</param>
+            <param name="value">
+            The value to set. (true to align this element's bottom edge with the panel's
+            bottom edge; otherwise, false.)
+            </param>
+        </member>
+        <member name="F:UniversalWPF.RelativePanel.AlignBottomWithPanelProperty">
+            <summary>
+             Identifies the <see cref="F:UniversalWPF.RelativePanel.AlignBottomWithPanelProperty"/> XAML attached property.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.GetAlignBottomWith(System.Windows.DependencyObject)">
+            <summary>
+            Gets the value of the RelativePanel.AlignBottomWith XAML attached property for the target element.
+            </summary>
+            <param name="obj">The object from which the property value is read.</param>
+            <returns>
+            The RelativePanel.AlignBottomWith XAML attached property value of the specified object.
+            (The element to align this element's bottom edge with.)
+            </returns>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.SetAlignBottomWith(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            Sets the value of the RelativePanel.Above XAML attached property for a target element.
+            </summary>
+            <param name="obj">The object to which the property value is written.</param>
+            <param name="value">The value to set. (The element to align this element's bottom edge with.)</param>
+        </member>
+        <member name="F:UniversalWPF.RelativePanel.AlignBottomWithProperty">
+            <summary>
+             Identifies the <see cref="F:UniversalWPF.RelativePanel.AlignBottomWithProperty"/> XAML attached property.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.GetAlignHorizontalCenterWithPanel(System.Windows.DependencyObject)">
+            <summary>
+            Gets the value of the RelativePanel.AlignHorizontalCenterWithPanel XAML attached property for the target element.
+            </summary>
+            <param name="obj">The object from which the property value is read.</param>
+            <returns>
+            The RelativePanel.AlignHorizontalCenterWithPanel XAML attached property value
+            of the specified object. (true to horizontally center this element in the panel;
+            otherwise, false.)
+            </returns>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.SetAlignHorizontalCenterWithPanel(System.Windows.DependencyObject,System.Boolean)">
+            <summary>
+            Sets the value of the RelativePanel.Above XAML attached property for a target element.
+            </summary>
+            <param name="obj">The object to which the property value is written.</param>
+            <param name="value">
+            The value to set. (true to horizontally center this element in the panel; otherwise,
+            false.)
+            </param>
+        </member>
+        <member name="F:UniversalWPF.RelativePanel.AlignHorizontalCenterWithPanelProperty">
+            <summary>
+             Identifies the <see cref="F:UniversalWPF.RelativePanel.AlignHorizontalCenterWithPanelProperty"/> XAML attached property.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.GetAlignHorizontalCenterWith(System.Windows.DependencyObject)">
+            <summary>
+            Gets the value of the RelativePanel.AlignHorizontalCenterWith XAML attached property for the target element.
+            </summary>
+            <param name="obj">The object from which the property value is read.</param>
+            <returns>
+            The RelativePanel.AlignHorizontalCenterWith XAML attached property value of the
+            specified object. (The element to align this element's horizontal center with.)
+            </returns>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.SetAlignHorizontalCenterWith(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            Sets the value of the RelativePanel.Above XAML attached property for a target element.
+            </summary>
+            <param name="obj">The object to which the property value is written.</param>
+            <param name="value">The value to set. (The element to align this element's horizontal center with.)</param>
+        </member>
+        <member name="F:UniversalWPF.RelativePanel.AlignHorizontalCenterWithProperty">
+            <summary>
+             Identifies the <see cref="F:UniversalWPF.RelativePanel.AlignHorizontalCenterWithProperty"/> XAML attached property.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.GetAlignLeftWithPanel(System.Windows.DependencyObject)">
+            <summary>
+            Gets the value of the RelativePanel.AlignLeftWithPanel XAML attached property for the target element.
+            </summary>
+            <param name="obj">The object from which the property value is read.</param>
+            <returns>
+            The RelativePanel.AlignLeftWithPanel XAML attached property value of the specified
+            object. (true to align this element's left edge with the panel's left edge; otherwise,
+            false.)
+            </returns>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.SetAlignLeftWithPanel(System.Windows.DependencyObject,System.Boolean)">
+            <summary>
+            Sets the value of the RelativePanel.Above XAML attached property for a target element.
+            </summary>
+            <param name="obj">The object to which the property value is written.</param>
+            <param name="value">
+             The value to set. (true to align this element's left edge with the panel's left
+             edge; otherwise, false.)
+            </param>
+        </member>
+        <member name="F:UniversalWPF.RelativePanel.AlignLeftWithPanelProperty">
+            <summary>
+             Identifies the <see cref="F:UniversalWPF.RelativePanel.AlignLeftWithPanelProperty"/> XAML attached property.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.GetAlignLeftWith(System.Windows.DependencyObject)">
+            <summary>
+            Gets the value of the RelativePanel.AlignLeftWith XAML attached property for the target element.
+            </summary>
+            <param name="obj">The object from which the property value is read.</param>
+            <returns>
+            The RelativePanel.AlignLeftWith XAML attached property value of the specified
+            object. (The element to align this element's left edge with.)
+            </returns>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.SetAlignLeftWith(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            Sets the value of the RelativePanel.Above XAML attached property for a target element.
+            </summary>
+            <param name="obj">The object to which the property value is written.</param>
+            <param name="value">The value to set. (The element to align this element's left edge with.)</param>
+        </member>
+        <member name="F:UniversalWPF.RelativePanel.AlignLeftWithProperty">
+            <summary>
+             Identifies the <see cref="F:UniversalWPF.RelativePanel.AlignLeftWithProperty"/> XAML attached property.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.GetAlignRightWithPanel(System.Windows.DependencyObject)">
+            <summary>
+            Gets the value of the RelativePanel.AlignRightWithPanel XAML attached property for the target element.
+            </summary>
+            <param name="obj">The object from which the property value is read.</param>
+            <returns>
+            The RelativePanel.AlignRightWithPanel XAML attached property value of the specified
+            object. (true to align this element's right edge with the panel's right edge;
+            otherwise, false.)
+            </returns>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.SetAlignRightWithPanel(System.Windows.DependencyObject,System.Boolean)">
+            <summary>
+            Sets the value of the RelativePanel.Above XAML attached property for a target element.
+            </summary>
+            <param name="obj">The object to which the property value is written.</param>
+            <param name="value">
+            The value to set. (true to align this element's right edge with the panel's right
+            edge; otherwise, false.)
+            </param>
+        </member>
+        <member name="F:UniversalWPF.RelativePanel.AlignRightWithPanelProperty">
+            <summary>
+             Identifies the <see cref="F:UniversalWPF.RelativePanel.AlignRightWithPanelProperty"/> XAML attached property.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.GetAlignRightWith(System.Windows.DependencyObject)">
+            <summary>
+            Gets the value of the RelativePanel.AlignRightWith XAML attached property for the target element.
+            </summary>
+            <param name="obj">The object from which the property value is read.</param>
+            <returns>
+            The RelativePanel.AlignRightWith XAML attached property value of the specified
+            object. (The element to align this element's right edge with.)
+            </returns>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.SetAlignRightWith(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            Sets the value of the RelativePanel.AlignRightWith XAML attached property for a target element.
+            </summary>
+            <param name="obj">The object to which the property value is written.</param>
+            <param name="value">The value to set. (The element to align this element's right edge with.)</param>
+        </member>
+        <member name="F:UniversalWPF.RelativePanel.AlignRightWithProperty">
+            <summary>
+             Identifies the <see cref="F:UniversalWPF.RelativePanel.AlignRightWithProperty"/> XAML attached property.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.GetAlignTopWithPanel(System.Windows.DependencyObject)">
+            <summary>
+            Gets the value of the RelativePanel.AlignTopWithPanel XAML attached property for the target element.
+            </summary>
+            <param name="obj">The object from which the property value is read.</param>
+            <returns>
+            The RelativePanel.AlignTopWithPanel XAML attached property value of the specified
+            object. (true to align this element's top edge with the panel's top edge; otherwise,
+            false.)
+            </returns>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.SetAlignTopWithPanel(System.Windows.DependencyObject,System.Boolean)">
+            <summary>
+            Sets the value of the RelativePanel.AlignTopWithPanel XAML attached property for a target element.
+            </summary>
+            <param name="obj">The object to which the property value is written.</param>
+            <param name="value">
+            The value to set. (true to align this element's top edge with the panel's top
+            edge; otherwise, false.)
+            </param>
+        </member>
+        <member name="F:UniversalWPF.RelativePanel.AlignTopWithPanelProperty">
+            <summary>
+             Identifies the <see cref="F:UniversalWPF.RelativePanel.AlignTopWithPanelProperty"/> XAML attached property.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.GetAlignTopWith(System.Windows.DependencyObject)">
+            <summary>
+            Gets the value of the RelativePanel.AlignTopWith XAML attached property for the target element.
+            </summary>
+            <param name="obj">The object from which the property value is read.</param>
+            <returns>The value to set. (The element to align this element's top edge with.)</returns>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.SetAlignTopWith(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            Sets the value of the RelativePanel.AlignTopWith XAML attached property for a target element.
+            </summary>
+            <param name="obj">The object to which the property value is written.</param>
+            <param name="value">The value to set. (The element to align this element's top edge with.)</param>
+        </member>
+        <member name="F:UniversalWPF.RelativePanel.AlignTopWithProperty">
+            <summary>
+             Identifies the <see cref="F:UniversalWPF.RelativePanel.AlignTopWithProperty"/> XAML attached property.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.GetAlignVerticalCenterWithPanel(System.Windows.DependencyObject)">
+            <summary>
+            Gets the value of the RelativePanel.AlignVerticalCenterWithPanel XAML attached property for the target element.
+            </summary>
+            <param name="obj">The object from which the property value is read.</param>
+            <returns>
+            The RelativePanel.AlignVerticalCenterWithPanel XAML attached property value of
+            the specified object. (true to vertically center this element in the panel; otherwise,
+            false.)
+            </returns>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.SetAlignVerticalCenterWithPanel(System.Windows.DependencyObject,System.Boolean)">
+            <summary>
+            Sets the value of the RelativePanel.AlignVerticalCenterWithPanel XAML attached property for a target element.
+            </summary>
+            <param name="obj">The object to which the property value is written.</param>
+            <param name="value">
+            The value to set. (true to vertically center this element in the panel; otherwise,
+            false.)
+            </param>
+        </member>
+        <member name="F:UniversalWPF.RelativePanel.AlignVerticalCenterWithPanelProperty">
+            <summary>
+             Identifies the <see cref="F:UniversalWPF.RelativePanel.AlignVerticalCenterWithPanelProperty"/> XAML attached property.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.GetAlignVerticalCenterWith(System.Windows.DependencyObject)">
+            <summary>
+            Gets the value of the RelativePanel.AlignVerticalCenterWith XAML attached property for the target element.
+            </summary>
+            <param name="obj">The object from which the property value is read.</param>
+            <returns>The value to set. (The element to align this element's vertical center with.)</returns>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.SetAlignVerticalCenterWith(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            Sets the value of the RelativePanel.AlignVerticalCenterWith XAML attached property for a target element.
+            </summary>
+            <param name="obj">The object to which the property value is written.</param>
+            <param name="value">The value to set. (The element to align this element's horizontal center with.)</param>
+        </member>
+        <member name="F:UniversalWPF.RelativePanel.AlignVerticalCenterWithProperty">
+            <summary>
+             Identifies the <see cref="F:UniversalWPF.RelativePanel.AlignVerticalCenterWithProperty"/> XAML attached property.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.GetBelow(System.Windows.DependencyObject)">
+            <summary>
+            Gets the value of the RelativePanel.Below XAML attached property for the target element.
+            </summary>
+            <param name="obj">The object from which the property value is read.</param>
+            <returns>
+            The RelativePanel.Below XAML attached property value of the specified object.
+            (The element to position this element below.)                                
+            </returns>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.SetBelow(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            Sets the value of the RelativePanel.Above XAML attached property for a target element.
+            </summary>
+            <param name="obj">The object to which the property value is written.</param>
+            <param name="value">The value to set. (The element to position this element below.)</param>
+        </member>
+        <member name="F:UniversalWPF.RelativePanel.BelowProperty">
+            <summary>
+             Identifies the <see cref="F:UniversalWPF.RelativePanel.BelowProperty"/> XAML attached property.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.GetLeftOf(System.Windows.DependencyObject)">
+            <summary>
+            Gets the value of the RelativePanel.LeftOf XAML attached property for the target element.
+            </summary>
+            <param name="obj">The object from which the property value is read.</param>
+            <returns>
+            The RelativePanel.LeftOf XAML attached property value of the specified object.
+            (The element to position this element to the left of.)                                 
+            </returns>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.SetLeftOf(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            Sets the value of the RelativePanel.LeftOf XAML attached property for a target element.
+            </summary>
+            <param name="obj">The object to which the property value is written.</param>
+            <param name="value">The value to set. (The element to position this element to the left of.)</param>
+        </member>
+        <member name="F:UniversalWPF.RelativePanel.LeftOfProperty">
+            <summary>
+             Identifies the <see cref="F:UniversalWPF.RelativePanel.LeftOfProperty"/> XAML attached property.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.GetRightOf(System.Windows.DependencyObject)">
+            <summary>
+            Gets the value of the RelativePanel.RightOf XAML attached property for the target element.
+            </summary>
+            <param name="obj">The object from which the property value is read.</param>
+            <returns>
+            The RelativePanel.RightOf XAML attached property value of the specified object.
+            (The element to position this element to the right of.)                                   
+            </returns>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.SetRightOf(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            Sets the value of the RelativePanel.RightOf XAML attached property for a target element.
+            </summary>
+            <param name="obj">The object to which the property value is written.</param>
+            <param name="value">The value to set. (The element to position this element to the right of.)</param>
+        </member>
+        <member name="F:UniversalWPF.RelativePanel.RightOfProperty">
+            <summary>
+             Identifies the <see cref="F:UniversalWPF.RelativePanel.RightOfProperty"/> XAML attached property.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.MeasureOverride(System.Windows.Size)">
+            <summary>
+            When overridden in a derived class, measures the size in layout required for
+            child elements and determines a size for the System.Windows.FrameworkElement-derived
+            class.</summary>
+            <param name="availableSize">
+            The available size that this element can give to child elements. Infinity can
+            be specified as a value to indicate that the element will size to whatever content
+            is available.
+            </param>
+            <returns>
+            The size that this element determines it needs during layout, based on its calculations
+            of child element sizes.
+            </returns>
+        </member>
+        <member name="M:UniversalWPF.RelativePanel.ArrangeOverride(System.Windows.Size)">
+            <summary>
+             When overridden in a derived class, positions child elements and determines a
+             size for a System.Windows.FrameworkElement derived class.
+            </summary>
+            <param name="finalSize">
+            The final area within the parent that this element should use to arrange itself
+            and its children.
+            </param>
+            <returns>The actual size used.</returns>
+        </member>
+        <member name="M:UniversalWPF.DisplayRegionHelper.GetWindowRect(System.IntPtr,UniversalWPF.DisplayRegionHelper.RECT@)">
+            <summary>
+            Retrieves the dimensions of the bounding rectangle of the specified window.
+            The dimensions are given in screen coordinates that are relative to the upper-left corner of the screen.
+            </summary>
+            <param name="hwnd"></param>
+            <param name="lpRect"></param>
+            <returns></returns>
+        </member>
+        <member name="T:UniversalWPF.TwoPaneView">
+            <summary>
+            Represents a container with two views that size and position content in the available space, either side-by-side or top-bottom.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.TwoPaneView.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UniversalWPF.TwoPaneView"/> class.
+            </summary>
+        </member>
+        <member name="M:UniversalWPF.TwoPaneView.OnApplyTemplate">
+            <inheritdoc />
+        </member>
+        <member name="P:UniversalWPF.TwoPaneView.MinWideModeWidth">
+            <summary>
+            Gets or sets the minimum width at which panes are shown in wide mode.
+            </summary>
+            <value>The minimum width at which panes are shown in wide mode.</value>
+        </member>
+        <member name="F:UniversalWPF.TwoPaneView.MinWideModeWidthProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.TwoPaneView.MinWideModeWidth"/> dependency property.
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.TwoPaneView.MinTallModeHeight">
+            <summary>
+            Gets or sets the minimum height at which panes are shown in tall mode.
+            </summary>
+            <value>The minimum height at which panes are shown in tall mode.</value>
+        </member>
+        <member name="F:UniversalWPF.TwoPaneView.MinTallModeHeightProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.TwoPaneView.MinTallModeHeight"/> dependency property.
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.TwoPaneView.Pane1">
+            <summary>
+            Gets or sets the content of pane 1.
+            </summary>
+            <value>The content of pane 1.</value>
+        </member>
+        <member name="F:UniversalWPF.TwoPaneView.Pane1Property">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.TwoPaneView.Pane1"/> dependency property.
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.TwoPaneView.Pane2">
+            <summary>
+            Gets or sets the content of pane 2.
+            </summary>
+            <value>The content of pane 2.</value>
+        </member>
+        <member name="F:UniversalWPF.TwoPaneView.Pane2Property">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.TwoPaneView.Pane2"/> dependency property.
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.TwoPaneView.Pane1Length">
+            <summary>
+            Gets the calculated width (in wide mode) or height (in tall mode) of pane 1, or sets the GridLength value of pane 1.
+            </summary>
+            <value>The GridLength that represents the width or height of the pane.</value>
+        </member>
+        <member name="F:UniversalWPF.TwoPaneView.Pane1LengthProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.TwoPaneView.Pane1Length"/> dependency property.
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.TwoPaneView.Pane2Length">
+            <summary>
+            Gets the calculated width (in wide mode) or height (in tall mode) of pane 2, or sets the GridLength value of pane 2.
+            </summary>
+            <value>The GridLength that represents the width or height of the pane.</value>
+        </member>
+        <member name="F:UniversalWPF.TwoPaneView.Pane2LengthProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.TwoPaneView.Pane2Length"/> dependency property.
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.TwoPaneView.Mode">
+            <summary>
+            Gets a value that indicates how panes are shown.
+            </summary>
+            <value>An enumeration value that indicates how panes are shown.</value>
+        </member>
+        <member name="F:UniversalWPF.TwoPaneView.ModeProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.TwoPaneView.Mode"/> dependency property.
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.TwoPaneView.PanePriority">
+            <summary>
+            Gets or sets a value that indicates which pane has priority.
+            </summary>
+            <value>An enumeration value that indicates which pane has priority.</value>
+        </member>
+        <member name="F:UniversalWPF.TwoPaneView.PanePriorityProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.TwoPaneView.PanePriority"/> dependency property.
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.TwoPaneView.WideModeConfiguration">
+            <summary>
+            Gets or sets a value that indicates how panes are shown in wide mode.
+            </summary>
+            <value>An enumeration value that indicates how panes are shown in wide mode.</value>
+        </member>
+        <member name="F:UniversalWPF.TwoPaneView.WideModeConfigurationProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.TwoPaneView.WideModeConfiguration"/> dependency property.
+            </summary>
+        </member>
+        <member name="P:UniversalWPF.TwoPaneView.TallModeConfiguration">
+            <summary>
+            Gets or sets a value that indicates how panes are shown in tall mode.
+            </summary>
+            <value>An enumeration value that indicates how panes are shown in tall mode.</value>
+        </member>
+        <member name="F:UniversalWPF.TwoPaneView.TallModeConfigurationProperty">
+            <summary>
+            Identifies the <see cref="P:UniversalWPF.TwoPaneView.TallModeConfiguration"/> dependency property.
+            </summary>
+        </member>
+        <member name="E:UniversalWPF.TwoPaneView.ModeChanged">
+            <summary>
+            Occurs when the <see cref="P:UniversalWPF.TwoPaneView.Mode"/> of the <see cref="T:UniversalWPF.TwoPaneView"/> has changed.
+            </summary>
+        </member>
+        <member name="T:UniversalWPF.TwoPaneViewMode">
+            <summary>
+            Defines constants that specify how panes are shown in a <see cref="T:UniversalWPF.TwoPaneView"/>.
+            </summary>
+            <seealso cref="T:UniversalWPF.TwoPaneView"/>
+            <seealso cref="P:UniversalWPF.TwoPaneView.Mode"/>
+        </member>
+        <member name="F:UniversalWPF.TwoPaneViewMode.SinglePane">
+            <summary>
+            Only one pane is shown.
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.TwoPaneViewMode.Wide">
+            <summary>
+            Panes are shown side-by-side.
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.TwoPaneViewMode.Tall">
+            <summary>
+            Panes are shown top-bottom.
+            </summary>
+        </member>
+        <member name="T:UniversalWPF.TwoPaneViewPriority">
+            <summary>
+            Defines constants that specify which pane has priority in a TwoPaneView.
+            </summary>
+            <seealso cref="T:UniversalWPF.TwoPaneView"/>
+            <seealso cref="P:UniversalWPF.TwoPaneView.PanePriority"/>
+        </member>
+        <member name="F:UniversalWPF.TwoPaneViewPriority.Pane1">
+            <summary>
+            Pane 1 has priority.
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.TwoPaneViewPriority.Pane2">
+            <summary>
+            Pane 2 has priority.
+            </summary>
+        </member>
+        <member name="T:UniversalWPF.TwoPaneViewTallModeConfiguration">
+            <summary>
+            Defines constants that specify how panes are shown in a <see cref="T:UniversalWPF.TwoPaneView"/> in tall mode.
+            </summary>
+            <seealso cref="T:UniversalWPF.TwoPaneView"/>
+            <seealso cref="P:UniversalWPF.TwoPaneView.TallModeConfiguration"/>
+        </member>
+        <member name="F:UniversalWPF.TwoPaneViewTallModeConfiguration.SinglePane">
+            <summary>
+            Only the pane that has priority is shown, the other pane is hidden.
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.TwoPaneViewTallModeConfiguration.TopBottom">
+            <summary>
+            The pane that has priority is shown on top, the other pane is shown on the bottom.
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.TwoPaneViewTallModeConfiguration.BottomTop">
+            <summary>
+            The pane that has priority is shown on the bottom, the other pane is shown on top.
+            </summary>
+        </member>
+        <member name="T:UniversalWPF.TwoPaneViewWideModeConfiguration">
+            <summary>
+            Defines constants that specify how panes are shown in a <see cref="T:UniversalWPF.TwoPaneView"/> in wide mode.
+            </summary>
+            <seealso cref="T:UniversalWPF.TwoPaneView"/>
+            <seealso cref="P:UniversalWPF.TwoPaneView.WideModeConfiguration"/>
+        </member>
+        <member name="F:UniversalWPF.TwoPaneViewWideModeConfiguration.SinglePane">
+            <summary>
+            Only the pane that has priority is shown, the other pane is hidden.
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.TwoPaneViewWideModeConfiguration.LeftRight">
+            <summary>
+            The pane that has priority is shown on the left, the other pane is shown on the right.
+            </summary>
+        </member>
+        <member name="F:UniversalWPF.TwoPaneViewWideModeConfiguration.RightLeft">
+            <summary>
+            The pane that has priority is shown on the right, the other pane is shown on the left.
+            </summary>
+        </member>
+    </members>
+</doc>

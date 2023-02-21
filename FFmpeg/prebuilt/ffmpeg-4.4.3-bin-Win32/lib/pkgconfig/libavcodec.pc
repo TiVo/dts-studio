@@ -1,0 +1,14 @@
+prefix=/c/Private/work/utilitare/ffmpeg/ffmpeg-4.4.3-bin-Win32
+exec_prefix=${prefix}
+libdir=/c/Private/work/utilitare/ffmpeg/ffmpeg-4.4.3-bin-Win32/lib
+includedir=/c/Private/work/utilitare/ffmpeg/ffmpeg-4.4.3-bin-Win32/include
+
+Name: libavcodec
+Description: FFmpeg codec library
+Version: 58.134.100
+Requires: 
+Requires.private: libswresample >= 3.9.100, libavutil >= 56.70.100
+Conflicts:
+Libs: -L${libdir}  -lavcodec 
+Libs.private: -libpath:C:/Private/work/utilitare/ffmpeg/openh264-bin-msvc-32/lib openh264.lib mfplat.lib mfuuid.lib ole32.lib strmiids.lib ole32.lib user32.lib
+Cflags: -I${includedir}

@@ -1,0 +1,33 @@
+name: Build all driver samples
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE'
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [Debug, Release]
+        platform: [x64, arm64]
+    runs-on: windows-2022
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+
+      - name: Add MSBuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
+
+      - name: Retrieve and build all available solutions
+        id: build-all-samples
+        run: |
+          .\Build-AllSamples.ps1 -Verbose
+        env:
+          WDS_Configuration: ${{ matrix.configuration }}
+          WDS_Platform: ${{ matrix.platform }}
