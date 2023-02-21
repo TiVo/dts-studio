@@ -1,0 +1,14 @@
+Building openh264:
+==================
+
+1. Cloned the tag v2.3.1 of openh264 from https://github.com/cisco/openh264.git
+
+2. Launch a command prompt and run the following command:
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvarsall.bat" amd64
+
+3. Built openh264 with the following command:
+make.exe -i OS=msvc  ARCH=x86_64 USE_ASM=Yes BUILDTYPE=Release
+
+4. Installed openh264 to a custom dir:
+make.exe -i OS=msvc  ARCH=x86_64 USE_ASM=Yes BUILDTYPE=Release DESTDIR=<custom_dir> install
+
