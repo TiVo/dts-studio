@@ -70,6 +70,7 @@
 *.obj                 filter=lfs diff=lfs merge=lfs -text
 *.odg                 filter=lfs diff=lfs merge=lfs -text
 *.odt                 filter=lfs diff=lfs merge=lfs -text
+*.onnx                filter=lfs diff=lfs merge=lfs -text
 *.oxps                filter=lfs diff=lfs merge=lfs -text
 *.p7s                 filter=lfs diff=lfs merge=lfs -text
 *.pb                  filter=lfs diff=lfs merge=lfs -text
