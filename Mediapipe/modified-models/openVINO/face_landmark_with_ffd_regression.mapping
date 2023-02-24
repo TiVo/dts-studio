@@ -1,0 +1,703 @@
+<?xml version="1.0" ?>
+<mapping>
+	<map>
+		<framework name="const_fold_opt__653" out_port_id="const_fold_opt__653"/>
+		<IR name="const_fold_opt__653" out_port_id="0" id="161"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__656" out_port_id="const_fold_opt__656"/>
+		<IR name="const_fold_opt__656" out_port_id="0" id="249"/>
+	</map>
+	<map>
+		<framework name="conv2d_10" out_port_id="conv2d_10"/>
+		<IR name="conv2d_10" out_port_id="2" id="122"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__509" out_port_id="const_fold_opt__509"/>
+		<IR name="const_fold_opt__509" out_port_id="0" id="87"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_5" out_port_id="p_re_lu_5"/>
+		<IR name="p_re_lu_5" out_port_id="2" id="58"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__579" out_port_id="const_fold_opt__579"/>
+		<IR name="const_fold_opt__579" out_port_id="0" id="149"/>
+	</map>
+	<map>
+		<framework name="add_15" out_port_id="add_15"/>
+		<IR name="add_15" out_port_id="2" id="191"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__660" out_port_id="const_fold_opt__660"/>
+		<IR name="const_fold_opt__660" out_port_id="0" id="169"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_26" out_port_id="p_re_lu_26"/>
+		<IR name="p_re_lu_26" out_port_id="2" id="250"/>
+	</map>
+	<map>
+		<framework name="conv2d_15" out_port_id="conv2d_15"/>
+		<IR name="conv2d_15" out_port_id="2" id="178"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_4" out_port_id="p_re_lu_4"/>
+		<IR name="p_re_lu_4" out_port_id="2" id="47"/>
+	</map>
+	<map>
+		<framework name="add_13" out_port_id="add_13"/>
+		<IR name="add_13" out_port_id="2" id="168"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__697" out_port_id="const_fold_opt__697"/>
+		<IR name="const_fold_opt__697" out_port_id="0" id="195"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__701" out_port_id="const_fold_opt__701"/>
+		<IR name="const_fold_opt__701" out_port_id="0" id="138"/>
+	</map>
+	<map>
+		<framework name="max_pooling2d_5" out_port_id="max_pooling2d_5"/>
+		<IR name="max_pooling2d_5" out_port_id="1" id="182"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__631" out_port_id="const_fold_opt__631"/>
+		<IR name="const_fold_opt__631" out_port_id="0" id="194"/>
+	</map>
+	<map>
+		<framework name="depthwise_conv2d_15" out_port_id="depthwise_conv2d_15"/>
+		<IR name="depthwise_conv2d_15" out_port_id="2" id="187"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_27" out_port_id="p_re_lu_27"/>
+		<IR name="p_re_lu_27" out_port_id="2" id="255"/>
+	</map>
+	<map>
+		<framework name="conv2d_29" out_port_id="conv2d_29"/>
+		<IR name="conv2d_29" out_port_id="2" id="253"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__492" out_port_id="const_fold_opt__492"/>
+		<IR name="const_fold_opt__492" out_port_id="0" id="107"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__593" out_port_id="const_fold_opt__593"/>
+		<IR name="const_fold_opt__593" out_port_id="0" id="124"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__692" out_port_id="const_fold_opt__692"/>
+		<IR name="const_fold_opt__692" out_port_id="0" id="150"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__621" out_port_id="const_fold_opt__621"/>
+		<IR name="const_fold_opt__621" out_port_id="0" id="38"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_15" out_port_id="p_re_lu_15"/>
+		<IR name="p_re_lu_15" out_port_id="2" id="181"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__627" out_port_id="const_fold_opt__627"/>
+		<IR name="const_fold_opt__627" out_port_id="0" id="20"/>
+	</map>
+	<map>
+		<framework name="channel_padding_2" out_port_id="channel_padding_2"/>
+		<IR name="channel_padding_2" out_port_id="4" id="75"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__658" out_port_id="const_fold_opt__658"/>
+		<IR name="const_fold_opt__658" out_port_id="0" id="254"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_12" out_port_id="p_re_lu_12"/>
+		<IR name="p_re_lu_12" out_port_id="2" id="147"/>
+	</map>
+	<map>
+		<framework name="conv2d_1" out_port_id="conv2d_1"/>
+		<IR name="conv2d_1" out_port_id="2" id="6"/>
+	</map>
+	<map>
+		<framework name="depthwise_conv2d_8" out_port_id="depthwise_conv2d_8"/>
+		<IR name="depthwise_conv2d_8" out_port_id="2" id="102"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__698" out_port_id="const_fold_opt__698"/>
+		<IR name="const_fold_opt__698" out_port_id="0" id="98"/>
+	</map>
+	<map>
+		<framework name="add_5" out_port_id="add_5"/>
+		<IR name="add_5" out_port_id="2" id="67"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__695" out_port_id="const_fold_opt__695"/>
+		<IR name="const_fold_opt__695" out_port_id="0" id="222"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__474" out_port_id="const_fold_opt__474"/>
+		<IR name="const_fold_opt__474" out_port_id="0" id="180"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__534" out_port_id="const_fold_opt__534"/>
+		<IR name="const_fold_opt__534" out_port_id="0" id="256"/>
+	</map>
+	<map>
+		<framework name="depthwise_conv2d_1" out_port_id="depthwise_conv2d_1"/>
+		<IR name="depthwise_conv2d_1" out_port_id="2" id="13"/>
+	</map>
+	<map>
+		<framework name="conv2d_21205" out_port_id="conv2d_21_raw_output___3:0"/>
+		<IR name="conv2d_21205" out_port_id="2" id="234"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__662" out_port_id="const_fold_opt__662"/>
+		<IR name="const_fold_opt__662" out_port_id="0" id="68"/>
+	</map>
+	<map>
+		<framework name="add_7" out_port_id="add_7"/>
+		<IR name="add_7" out_port_id="2" id="95"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__648" out_port_id="const_fold_opt__648"/>
+		<IR name="const_fold_opt__648" out_port_id="0" id="46"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_2" out_port_id="p_re_lu_2"/>
+		<IR name="p_re_lu_2" out_port_id="2" id="19"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__446" out_port_id="const_fold_opt__446"/>
+		<IR name="const_fold_opt__446" out_port_id="0" id="48"/>
+	</map>
+	<map>
+		<framework name="squeezed_out" out_port_id="squeezed_out"/>
+		<IR name="squeezed_out" out_port_id="2" id="276"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__613" out_port_id="const_fold_opt__613"/>
+		<IR name="const_fold_opt__613" out_port_id="0" id="7"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__546" out_port_id="const_fold_opt__546"/>
+		<IR name="const_fold_opt__546" out_port_id="0" id="239"/>
+	</map>
+	<map>
+		<framework name="conv2d_14" out_port_id="conv2d_14"/>
+		<IR name="conv2d_14" out_port_id="2" id="167"/>
+	</map>
+	<map>
+		<framework name="conv2d_7" out_port_id="conv2d_7"/>
+		<IR name="conv2d_7" out_port_id="2" id="83"/>
+	</map>
+	<map>
+		<framework name="max_pooling2d_1" out_port_id="max_pooling2d_1"/>
+		<IR name="max_pooling2d_1" out_port_id="1" id="31"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__589" out_port_id="const_fold_opt__589"/>
+		<IR name="const_fold_opt__589" out_port_id="0" id="192"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__667" out_port_id="const_fold_opt__667"/>
+		<IR name="const_fold_opt__667" out_port_id="0" id="88"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__596" out_port_id="const_fold_opt__596"/>
+		<IR name="const_fold_opt__596" out_port_id="0" id="158"/>
+	</map>
+	<map>
+		<framework name="add_24" out_port_id="add_24"/>
+		<IR name="add_24" out_port_id="2" id="264"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_20" out_port_id="p_re_lu_20"/>
+		<IR name="p_re_lu_20" out_port_id="2" id="231"/>
+	</map>
+	<map>
+		<framework name="depthwise_conv2d_17" out_port_id="depthwise_conv2d_17"/>
+		<IR name="depthwise_conv2d_17" out_port_id="2" id="209"/>
+	</map>
+	<map>
+		<framework name="depthwise_conv2d_3" out_port_id="depthwise_conv2d_3"/>
+		<IR name="depthwise_conv2d_3" out_port_id="2" id="41"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_9" out_port_id="p_re_lu_9"/>
+		<IR name="p_re_lu_9" out_port_id="2" id="108"/>
+	</map>
+	<map>
+		<framework name="add_10" out_port_id="add_10"/>
+		<IR name="add_10" out_port_id="2" id="134"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__493" out_port_id="const_fold_opt__493"/>
+		<IR name="const_fold_opt__493" out_port_id="0" id="126"/>
+	</map>
+	<map>
+		<framework name="depthwise_conv2d_13" out_port_id="depthwise_conv2d_13"/>
+		<IR name="depthwise_conv2d_13" out_port_id="2" id="164"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_7" out_port_id="p_re_lu_7"/>
+		<IR name="p_re_lu_7" out_port_id="2" id="86"/>
+	</map>
+	<map>
+		<framework name="add_4" out_port_id="add_4"/>
+		<IR name="add_4" out_port_id="2" id="56"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__683" out_port_id="const_fold_opt__683"/>
+		<IR name="const_fold_opt__683" out_port_id="0" id="77"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__565" out_port_id="const_fold_opt__565"/>
+		<IR name="const_fold_opt__565" out_port_id="0" id="238"/>
+	</map>
+	<map>
+		<framework name="depthwise_conv2d_6" out_port_id="depthwise_conv2d_6"/>
+		<IR name="depthwise_conv2d_6" out_port_id="2" id="80"/>
+	</map>
+	<map>
+		<framework name="input_1" out_port_id="input_1"/>
+		<IR name="input_1" out_port_id="0" id="2"/>
+	</map>
+	<map>
+		<framework name="new_shape__424" out_port_id="new_shape__424"/>
+		<IR name="new_shape__424" out_port_id="0" id="235"/>
+	</map>
+	<map>
+		<framework name="conv2d_6" out_port_id="conv2d_6"/>
+		<IR name="conv2d_6" out_port_id="2" id="66"/>
+	</map>
+	<map>
+		<framework name="gather_indices" out_port_id="gather_indices"/>
+		<IR name="gather_indices" out_port_id="0" id="273"/>
+	</map>
+	<map>
+		<framework name="conv2d_16" out_port_id="conv2d_16"/>
+		<IR name="conv2d_16" out_port_id="2" id="190"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_16" out_port_id="p_re_lu_16"/>
+		<IR name="p_re_lu_16" out_port_id="2" id="193"/>
+	</map>
+	<map>
+		<framework name="depthwise_conv2d_24" out_port_id="depthwise_conv2d_24"/>
+		<IR name="depthwise_conv2d_24" out_port_id="2" id="260"/>
+	</map>
+	<map>
+		<framework name="max_pooling2d_4" out_port_id="max_pooling2d_4"/>
+		<IR name="max_pooling2d_4" out_port_id="1" id="148"/>
+	</map>
+	<map>
+		<framework name="depthwise_conv2d_12" out_port_id="depthwise_conv2d_12"/>
+		<IR name="depthwise_conv2d_12" out_port_id="2" id="153"/>
+	</map>
+	<map>
+		<framework name="conv2d_3" out_port_id="conv2d_3"/>
+		<IR name="conv2d_3" out_port_id="2" id="27"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__661" out_port_id="const_fold_opt__661"/>
+		<IR name="const_fold_opt__661" out_port_id="0" id="18"/>
+	</map>
+	<map>
+		<framework name="add_3" out_port_id="add_3"/>
+		<IR name="add_3" out_port_id="2" id="45"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__702" out_port_id="const_fold_opt__702"/>
+		<IR name="const_fold_opt__702" out_port_id="0" id="183"/>
+	</map>
+	<map>
+		<framework name="conv2d_21__238" out_port_id="conv2d_21"/>
+		<IR name="conv2d_21" out_port_id="2" id="236"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__677" out_port_id="const_fold_opt__677"/>
+		<IR name="const_fold_opt__677" out_port_id="0" id="96"/>
+	</map>
+	<map>
+		<framework name="conv2d_28" out_port_id="conv2d_28"/>
+		<IR name="conv2d_28" out_port_id="2" id="247"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__650" out_port_id="const_fold_opt__650"/>
+		<IR name="const_fold_opt__650" out_port_id="0" id="135"/>
+	</map>
+	<map>
+		<framework name="add_12" out_port_id="add_12"/>
+		<IR name="add_12" out_port_id="2" id="157"/>
+	</map>
+	<map>
+		<framework name="conv2d_19" out_port_id="conv2d_19"/>
+		<IR name="conv2d_19" out_port_id="2" id="218"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__639" out_port_id="const_fold_opt__639"/>
+		<IR name="const_fold_opt__639" out_port_id="0" id="60"/>
+	</map>
+	<map>
+		<framework name="subtracted_out" out_port_id="subtracted_out"/>
+		<IR name="subtracted_out" out_port_id="2" id="278"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__704" out_port_id="const_fold_opt__704"/>
+		<IR name="const_fold_opt__704" out_port_id="0" id="99"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__539" out_port_id="const_fold_opt__539"/>
+		<IR name="const_fold_opt__539" out_port_id="0" id="214"/>
+	</map>
+	<map>
+		<framework name="depthwise_conv2d_16" out_port_id="depthwise_conv2d_16"/>
+		<IR name="depthwise_conv2d_16" out_port_id="2" id="198"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__558" out_port_id="const_fold_opt__558"/>
+		<IR name="const_fold_opt__558" out_port_id="0" id="203"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__517" out_port_id="const_fold_opt__517"/>
+		<IR name="const_fold_opt__517" out_port_id="0" id="59"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__556" out_port_id="const_fold_opt__556"/>
+		<IR name="const_fold_opt__556" out_port_id="0" id="265"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__700" out_port_id="const_fold_opt__700"/>
+		<IR name="const_fold_opt__700" out_port_id="0" id="10"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__647" out_port_id="const_fold_opt__647"/>
+		<IR name="const_fold_opt__647" out_port_id="0" id="184"/>
+	</map>
+	<map>
+		<framework name="conv2d_31185" out_port_id="conv2d_31_raw_output___5:0"/>
+		<IR name="conv2d_31" out_port_id="2" id="269"/>
+	</map>
+	<map>
+		<framework name="conv2d_31__200" out_port_id="conv2d_31"/>
+		<IR name="conv2d_31" out_port_id="2" id="269"/>
+	</map>
+	<map>
+		<framework name="conv2d_17" out_port_id="conv2d_17"/>
+		<IR name="conv2d_17" out_port_id="2" id="201"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_1" out_port_id="p_re_lu_1"/>
+		<IR name="p_re_lu_1" out_port_id="2" id="8"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__586" out_port_id="const_fold_opt__586"/>
+		<IR name="const_fold_opt__586" out_port_id="0" id="146"/>
+	</map>
+	<map>
+		<framework name="add_17" out_port_id="add_17"/>
+		<IR name="add_17" out_port_id="2" id="213"/>
+	</map>
+	<map>
+		<framework name="add_14" out_port_id="add_14"/>
+		<IR name="add_14" out_port_id="2" id="179"/>
+	</map>
+	<map>
+		<framework name="depthwise_conv2d_11" out_port_id="depthwise_conv2d_11"/>
+		<IR name="depthwise_conv2d_11" out_port_id="2" id="141"/>
+	</map>
+	<map>
+		<framework name="add_6" out_port_id="add_6"/>
+		<IR name="add_6" out_port_id="2" id="84"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__559" out_port_id="const_fold_opt__559"/>
+		<IR name="const_fold_opt__559" out_port_id="0" id="3"/>
+	</map>
+	<map>
+		<framework name="add_16" out_port_id="add_16"/>
+		<IR name="add_16" out_port_id="2" id="202"/>
+	</map>
+	<map>
+		<framework name="ffd_points_with_offset" out_port_id="ffd_points_with_offset"/>
+		<IR name="ffd_points_with_offset" out_port_id="2" id="281"/>
+	</map>
+	<map>
+		<framework name="depthwise_conv2d_14" out_port_id="depthwise_conv2d_14"/>
+		<IR name="depthwise_conv2d_14" out_port_id="2" id="175"/>
+	</map>
+	<map>
+		<framework name="conv2d_9" out_port_id="conv2d_9"/>
+		<IR name="conv2d_9" out_port_id="2" id="105"/>
+	</map>
+	<map>
+		<framework name="conv2d_20" out_port_id="conv2d_20"/>
+		<IR name="conv2d_20" out_port_id="2" id="228"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_14" out_port_id="p_re_lu_14"/>
+		<IR name="p_re_lu_14" out_port_id="2" id="170"/>
+	</map>
+	<map>
+		<framework name="depthwise_conv2d_10" out_port_id="depthwise_conv2d_10"/>
+		<IR name="depthwise_conv2d_10" out_port_id="2" id="130"/>
+	</map>
+	<map>
+		<framework name="offset_16" out_port_id="offset_16"/>
+		<IR name="offset_16" out_port_id="0" id="277"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__591" out_port_id="const_fold_opt__591"/>
+		<IR name="const_fold_opt__591" out_port_id="0" id="206"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__674" out_port_id="const_fold_opt__674"/>
+		<IR name="const_fold_opt__674" out_port_id="0" id="205"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_11" out_port_id="p_re_lu_11"/>
+		<IR name="p_re_lu_11" out_port_id="2" id="136"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__634" out_port_id="const_fold_opt__634"/>
+		<IR name="const_fold_opt__634" out_port_id="0" id="219"/>
+	</map>
+	<map>
+		<framework name="gathered_out" out_port_id="gathered_out"/>
+		<IR name="gathered_out233" out_port_id="3" id="275"/>
+	</map>
+	<map>
+		<framework name="depthwise_conv2d_4" out_port_id="depthwise_conv2d_4"/>
+		<IR name="depthwise_conv2d_4" out_port_id="2" id="52"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__480" out_port_id="const_fold_opt__480"/>
+		<IR name="const_fold_opt__480" out_port_id="0" id="137"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_17" out_port_id="p_re_lu_17"/>
+		<IR name="p_re_lu_17" out_port_id="2" id="204"/>
+	</map>
+	<map>
+		<framework name="linear.weight" out_port_id="linear.weight"/>
+		<IR name="linear.weight" out_port_id="0" id="271"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__687" out_port_id="const_fold_opt__687"/>
+		<IR name="const_fold_opt__687" out_port_id="0" id="257"/>
+	</map>
+	<map>
+		<framework name="depthwise_conv2d_7" out_port_id="depthwise_conv2d_7"/>
+		<IR name="depthwise_conv2d_7" out_port_id="2" id="91"/>
+	</map>
+	<map>
+		<framework name="add_8" out_port_id="add_8"/>
+		<IR name="add_8" out_port_id="2" id="106"/>
+	</map>
+	<map>
+		<framework name="depthwise_conv2d_18" out_port_id="depthwise_conv2d_18"/>
+		<IR name="depthwise_conv2d_18" out_port_id="2" id="225"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__466" out_port_id="const_fold_opt__466"/>
+		<IR name="const_fold_opt__466" out_port_id="0" id="171"/>
+	</map>
+	<map>
+		<framework name="add_23" out_port_id="add_23"/>
+		<IR name="add_23" out_port_id="2" id="248"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__690" out_port_id="const_fold_opt__690"/>
+		<IR name="const_fold_opt__690" out_port_id="0" id="172"/>
+	</map>
+	<map>
+		<framework name="depthwise_conv2d_9" out_port_id="depthwise_conv2d_9"/>
+		<IR name="depthwise_conv2d_9" out_port_id="2" id="119"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__486" out_port_id="const_fold_opt__486"/>
+		<IR name="const_fold_opt__486" out_port_id="0" id="230"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_10" out_port_id="p_re_lu_10"/>
+		<IR name="p_re_lu_10" out_port_id="2" id="125"/>
+	</map>
+	<map>
+		<framework name="conv2d_8" out_port_id="conv2d_8"/>
+		<IR name="conv2d_8" out_port_id="2" id="94"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__551" out_port_id="const_fold_opt__551"/>
+		<IR name="const_fold_opt__551" out_port_id="0" id="240"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__681" out_port_id="const_fold_opt__681"/>
+		<IR name="const_fold_opt__681" out_port_id="0" id="37"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__450" out_port_id="const_fold_opt__450"/>
+		<IR name="const_fold_opt__450" out_port_id="0" id="221"/>
+	</map>
+	<map>
+		<framework name="channel_padding_3" out_port_id="channel_padding_3"/>
+		<IR name="channel_padding_3" out_port_id="4" id="114"/>
+	</map>
+	<map>
+		<framework name="channel_padding_1" out_port_id="channel_padding_1"/>
+		<IR name="channel_padding_1" out_port_id="4" id="36"/>
+	</map>
+	<map>
+		<framework name="conv2d_2" out_port_id="conv2d_2"/>
+		<IR name="conv2d_2" out_port_id="2" id="16"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__577" out_port_id="const_fold_opt__577"/>
+		<IR name="const_fold_opt__577" out_port_id="0" id="160"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__672" out_port_id="const_fold_opt__672"/>
+		<IR name="const_fold_opt__672" out_port_id="0" id="21"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__513" out_port_id="const_fold_opt__513"/>
+		<IR name="const_fold_opt__513" out_port_id="0" id="76"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__615" out_port_id="const_fold_opt__615"/>
+		<IR name="const_fold_opt__615" out_port_id="0" id="115"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__571" out_port_id="const_fold_opt__571"/>
+		<IR name="const_fold_opt__571" out_port_id="0" id="29"/>
+	</map>
+	<map>
+		<framework name="depthwise_conv2d_23" out_port_id="depthwise_conv2d_23"/>
+		<IR name="depthwise_conv2d_23" out_port_id="2" id="244"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_28" out_port_id="p_re_lu_28"/>
+		<IR name="p_re_lu_28" out_port_id="2" id="266"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_3" out_port_id="p_re_lu_3"/>
+		<IR name="p_re_lu_3" out_port_id="2" id="30"/>
+	</map>
+	<map>
+		<framework name="conv2d_13" out_port_id="conv2d_13"/>
+		<IR name="conv2d_13" out_port_id="2" id="156"/>
+	</map>
+	<map>
+		<framework name="depthwise_conv2d_2" out_port_id="depthwise_conv2d_2"/>
+		<IR name="depthwise_conv2d_2" out_port_id="2" id="24"/>
+	</map>
+	<map>
+		<framework name="conv2d_30" out_port_id="conv2d_30"/>
+		<IR name="conv2d_30" out_port_id="2" id="263"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_6" out_port_id="p_re_lu_6"/>
+		<IR name="p_re_lu_6" out_port_id="2" id="69"/>
+	</map>
+	<map>
+		<framework name="max_pooling2d_2" out_port_id="max_pooling2d_2"/>
+		<IR name="max_pooling2d_2" out_port_id="1" id="70"/>
+	</map>
+	<map>
+		<framework name="add_1" out_port_id="add_1"/>
+		<IR name="add_1" out_port_id="2" id="17"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__594" out_port_id="const_fold_opt__594"/>
+		<IR name="const_fold_opt__594" out_port_id="0" id="85"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__678" out_port_id="const_fold_opt__678"/>
+		<IR name="const_fold_opt__678" out_port_id="0" id="49"/>
+	</map>
+	<map>
+		<framework name="add_11" out_port_id="add_11"/>
+		<IR name="add_11" out_port_id="2" id="145"/>
+	</map>
+	<map>
+		<framework name="conv2d_4" out_port_id="conv2d_4"/>
+		<IR name="conv2d_4" out_port_id="2" id="44"/>
+	</map>
+	<map>
+		<framework name="max_pooling2d_3" out_port_id="max_pooling2d_3"/>
+		<IR name="max_pooling2d_3" out_port_id="1" id="109"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__581" out_port_id="const_fold_opt__581"/>
+		<IR name="const_fold_opt__581" out_port_id="0" id="57"/>
+	</map>
+	<map>
+		<framework name="conv2d_11" out_port_id="conv2d_11"/>
+		<IR name="conv2d_11" out_port_id="2" id="133"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_18" out_port_id="p_re_lu_18"/>
+		<IR name="p_re_lu_18" out_port_id="2" id="215"/>
+	</map>
+	<map>
+		<framework name="add_2" out_port_id="add_2"/>
+		<IR name="add_2" out_port_id="2" id="28"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__688" out_port_id="const_fold_opt__688"/>
+		<IR name="const_fold_opt__688" out_port_id="0" id="241"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__645" out_port_id="const_fold_opt__645"/>
+		<IR name="const_fold_opt__645" out_port_id="0" id="9"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_19" out_port_id="p_re_lu_19"/>
+		<IR name="p_re_lu_19" out_port_id="2" id="220"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__703" out_port_id="const_fold_opt__703"/>
+		<IR name="const_fold_opt__703" out_port_id="0" id="0"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_13" out_port_id="p_re_lu_13"/>
+		<IR name="p_re_lu_13" out_port_id="2" id="159"/>
+	</map>
+	<map>
+		<framework name="add_18" out_port_id="add_18"/>
+		<IR name="add_18" out_port_id="2" id="229"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__623" out_port_id="const_fold_opt__623"/>
+		<IR name="const_fold_opt__623" out_port_id="0" id="1"/>
+	</map>
+	<map>
+		<framework name="conv2d_5" out_port_id="conv2d_5"/>
+		<IR name="conv2d_5" out_port_id="2" id="55"/>
+	</map>
+	<map>
+		<framework name="p_re_lu_8" out_port_id="p_re_lu_8"/>
+		<IR name="p_re_lu_8" out_port_id="2" id="97"/>
+	</map>
+	<map>
+		<framework name="conv2d_18" out_port_id="conv2d_18"/>
+		<IR name="conv2d_18" out_port_id="2" id="212"/>
+	</map>
+	<map>
+		<framework name="conv2d_12" out_port_id="conv2d_12"/>
+		<IR name="conv2d_12" out_port_id="2" id="144"/>
+	</map>
+	<map>
+		<framework name="add_9" out_port_id="add_9"/>
+		<IR name="add_9" out_port_id="2" id="123"/>
+	</map>
+	<map>
+		<framework name="depthwise_conv2d_5" out_port_id="depthwise_conv2d_5"/>
+		<IR name="depthwise_conv2d_5" out_port_id="2" id="63"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__686" out_port_id="const_fold_opt__686"/>
+		<IR name="const_fold_opt__686" out_port_id="0" id="127"/>
+	</map>
+	<map>
+		<framework name="const_fold_opt__682" out_port_id="const_fold_opt__682"/>
+		<IR name="const_fold_opt__682" out_port_id="0" id="116"/>
+	</map>
+</mapping>
