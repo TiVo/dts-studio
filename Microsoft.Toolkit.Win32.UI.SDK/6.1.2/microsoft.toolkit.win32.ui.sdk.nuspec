@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.Toolkit.Win32.UI.SDK</id>
+    <version>6.1.2</version>
+    <title>Windows Community Toolkit Tools for XAML Islands</title>
+    <authors>Microsoft.Toolkit</authors>
+    <owners>Microsoft.Toolkit</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/windows-toolkit/Microsoft.Toolkit.Win32/blob/master/license.md</licenseUrl>
+    <projectUrl>https://github.com/windows-toolkit/Microsoft.Toolkit.Win32</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/windows-toolkit/WindowsCommunityToolkit/master/build/nuget.png</iconUrl>
+    <description>This library provides XAML islands common helpers applications. It is part of the Windows Community Toolkit.</description>
+    <releaseNotes>https://github.com/windows-toolkit/Microsoft.Toolkit.Win32/releases</releaseNotes>
+    <copyright>(c) .NET Foundation and Contributors.  All rights reserved.</copyright>
+    <tags>XAML Islands Tools</tags>
+    <repository type="git" url="https://github.com/windows-toolkit/Microsoft.Toolkit.Win32" commit="a9299bff94900cb4d4845debcf4971f855865290" />
+  </metadata>
+</package>
