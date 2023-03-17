@@ -63,18 +63,16 @@ namespace wil
     class last_error_context
     {
 #ifndef WIL_KERNEL_MODE
-        bool m_dismissed;
-        DWORD m_error;
+        bool m_dismissed = false;
+        DWORD m_error = 0;
     public:
-        last_error_context() WI_NOEXCEPT :
-            m_dismissed(false),
-            m_error(::GetLastError())
+        last_error_context() WI_NOEXCEPT : last_error_context(::GetLastError())
         {
         }
 
-        auto value() const
+        explicit last_error_context(DWORD error) WI_NOEXCEPT :
+            m_error(error)
         {
-            return m_error;
         }
 
         last_error_context(last_error_context&& other) WI_NOEXCEPT
@@ -82,7 +80,7 @@ namespace wil
             operator=(wistd::move(other));
         }
 
-        last_error_context & operator=(last_error_context&& other) WI_NOEXCEPT
+        last_error_context& operator=(last_error_context&& other) WI_NOEXCEPT
         {
             m_dismissed = wistd::exchange(other.m_dismissed, true);
             m_error = other.m_error;
@@ -104,6 +102,11 @@ namespace wil
         {
             WI_ASSERT(!m_dismissed);
             m_dismissed = true;
+        }
+
+        auto value() const WI_NOEXCEPT
+        {
+            return m_error;
         }
 #else
     public:
@@ -174,6 +177,7 @@ namespace wil
             typedef typename policy::pointer pointer;
             typedef unique_storage<policy> base_storage;
 
+        public:
             unique_storage() WI_NOEXCEPT :
             m_ptr(policy::invalid_value())
             {
@@ -198,13 +202,6 @@ namespace wil
                 }
             }
 
-            void replace(unique_storage &&other) WI_NOEXCEPT
-            {
-                reset(other.m_ptr);
-                other.m_ptr = policy::invalid_value();
-            }
-
-        public:
             bool is_valid() const WI_NOEXCEPT
             {
                 return policy::is_valid(m_ptr);
@@ -244,6 +241,13 @@ namespace wil
                 return &m_ptr;
             }
 
+        protected:
+            void replace(unique_storage &&other) WI_NOEXCEPT
+            {
+                reset(other.m_ptr);
+                other.m_ptr = policy::invalid_value();
+            }
+
         private:
             pointer_storage m_ptr;
         };
@@ -273,7 +277,8 @@ namespace wil
 
         // forwarding constructor: forwards all 'explicit' and multi-arg constructors to the base class
         template <typename arg1, typename... args_t>
-        explicit unique_any_t(arg1 && first, args_t&&... args) :  // should not be WI_NOEXCEPT (may forward to a throwing constructor)
+        explicit unique_any_t(arg1 && first, args_t&&... args)
+            __WI_NOEXCEPT_((wistd::is_nothrow_constructible_v<storage_t, arg1, args_t...>)) :
             storage_t(wistd::forward<arg1>(first), wistd::forward<args_t>(args)...)
         {
             static_assert(wistd::is_same<typename policy::pointer_access, details::pointer_access_none>::value ||
@@ -762,7 +767,7 @@ namespace wil
     }
 
     /** Use to retrieve raw out parameter pointers (with a required cast) into smart pointers that do not support the '&' operator.
-    Use only when the smart pointer's &handle is not equal to the output type a function requries, necessitating a cast.
+    Use only when the smart pointer's &handle is not equal to the output type a function requires, necessitating a cast.
     Example: `wil::out_param_ptr<PSECURITY_DESCRIPTOR*>(securityDescriptor)` */
     template <typename Tcast, typename T>
     details::out_param_ptr_t<Tcast, T> out_param_ptr(T& p)
@@ -1884,6 +1889,7 @@ namespace wil {
             typedef typename policy::pointer pointer;
             typedef shared_storage<unique_t> base_storage;
 
+        public:
             shared_storage() = default;
 
             explicit shared_storage(pointer_storage ptr)
@@ -1923,12 +1929,6 @@ namespace wil {
             {
             }
 
-            void replace(shared_storage &&other) WI_NOEXCEPT
-            {
-                m_ptr = wistd::move(other.m_ptr);
-            }
-
-        public:
             bool is_valid() const WI_NOEXCEPT
             {
                 return (m_ptr && m_ptr->is_valid());
@@ -1978,6 +1978,12 @@ namespace wil {
                 return m_ptr.use_count();
             }
 
+        protected:
+            void replace(shared_storage &&other) WI_NOEXCEPT
+            {
+                m_ptr = wistd::move(other.m_ptr);
+            }
+
         private:
             template <typename storage_t>
             friend class ::wil::weak_any;
@@ -2002,7 +2008,8 @@ namespace wil {
 
         // default and forwarding constructor: forwards default, all 'explicit' and multi-arg constructors to the base class
         template <typename... args_t>
-        explicit shared_any_t(args_t&&... args) :  // should not be WI_NOEXCEPT (may forward to a throwing constructor)
+        explicit shared_any_t(args_t&&... args)
+            __WI_NOEXCEPT_((wistd::is_nothrow_constructible_v<storage_t, args_t...>)) :
             storage_t(wistd::forward<args_t>(args)...)
         {
         }
@@ -2426,7 +2433,7 @@ namespace wil
         // Non-RTL implementation for threadpool_t parameter of DestroyThreadPoolTimer<>
         struct SystemThreadPoolMethods
         {
-            static void WINAPI SetThreadpoolTimer(_Inout_ PTP_TIMER Timer, _In_opt_ PFILETIME DueTime, _In_ DWORD Period, _In_opt_ DWORD WindowLength) WI_NOEXCEPT
+            static void WINAPI SetThreadpoolTimer(_Inout_ PTP_TIMER Timer, _In_opt_ PFILETIME DueTime, _In_ DWORD Period, _In_ DWORD WindowLength) WI_NOEXCEPT
             {
                 ::SetThreadpoolTimer(Timer, DueTime, Period, WindowLength);
             }
@@ -2528,6 +2535,22 @@ namespace wil
 
 #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
     typedef unique_any<PSID, decltype(&::FreeSid), ::FreeSid> unique_sid;
+    typedef unique_any_handle_null_only<decltype(&::DeleteBoundaryDescriptor), ::DeleteBoundaryDescriptor> unique_boundary_descriptor;
+
+    namespace details
+    {
+        template<ULONG flags>
+        inline void __stdcall ClosePrivateNamespaceHelper(HANDLE h) WI_NOEXCEPT
+        {
+            ::ClosePrivateNamespace(h, flags);
+        }
+    }
+
+    template <ULONG flags = 0>
+    using unique_private_namespace = unique_any_handle_null_only<decltype(details::ClosePrivateNamespaceHelper<flags>), &details::ClosePrivateNamespaceHelper<flags>>;
+
+    using unique_private_namespace_close = unique_private_namespace<>;
+    using unique_private_namespace_destroy = unique_private_namespace<PRIVATE_NAMESPACE_FLAG_DESTROY>;
 #endif
 
     using unique_tool_help_snapshot = unique_hfile;
@@ -2651,23 +2674,23 @@ namespace wil
         }
 
         // Tries to create a named event -- returns false if unable to do so (gle may still be inspected with return=false)
-        bool try_create(EventOptions options, PCWSTR name, _In_opt_ LPSECURITY_ATTRIBUTES pSecurity = nullptr, _Out_opt_ bool *pAlreadyExists = nullptr)
+        bool try_create(EventOptions options, PCWSTR name, _In_opt_ LPSECURITY_ATTRIBUTES securityAttributes = nullptr, _Out_opt_ bool *alreadyExists = nullptr)
         {
-            auto handle = ::CreateEventExW(pSecurity, name, (WI_IsFlagSet(options, EventOptions::ManualReset) ? CREATE_EVENT_MANUAL_RESET : 0) | (WI_IsFlagSet(options, EventOptions::Signaled) ? CREATE_EVENT_INITIAL_SET : 0), EVENT_ALL_ACCESS);
+            auto handle = ::CreateEventExW(securityAttributes, name, (WI_IsFlagSet(options, EventOptions::ManualReset) ? CREATE_EVENT_MANUAL_RESET : 0) | (WI_IsFlagSet(options, EventOptions::Signaled) ? CREATE_EVENT_INITIAL_SET : 0), EVENT_ALL_ACCESS);
             if (!handle)
             {
-                assign_to_opt_param(pAlreadyExists, false);
+                assign_to_opt_param(alreadyExists, false);
                 return false;
             }
-            assign_to_opt_param(pAlreadyExists, (::GetLastError() == ERROR_ALREADY_EXISTS));
+            assign_to_opt_param(alreadyExists, (::GetLastError() == ERROR_ALREADY_EXISTS));
             storage_t::reset(handle);
             return true;
         }
 
         // Returns HRESULT for unique_event_nothrow, void with exceptions for shared_event and unique_event
-        result create(EventOptions options = EventOptions::None, PCWSTR name = nullptr, _In_opt_ LPSECURITY_ATTRIBUTES pSecurity = nullptr, _Out_opt_ bool *pAlreadyExists = nullptr)
+        result create(EventOptions options = EventOptions::None, PCWSTR name = nullptr, _In_opt_ LPSECURITY_ATTRIBUTES securityAttributes = nullptr, _Out_opt_ bool *alreadyExists = nullptr)
         {
-            return err_policy::LastErrorIfFalse(try_create(options, name, pSecurity, pAlreadyExists));
+            return err_policy::LastErrorIfFalse(try_create(options, name, securityAttributes, alreadyExists));
         }
 
         // Tries to open the named event -- returns false if unable to do so (gle may still be inspected with return=false)
@@ -2695,7 +2718,7 @@ namespace wil
     typedef unique_any_t<event_t<details::unique_storage<details::handle_resource_policy>, err_exception_policy>>      unique_event;
 #endif
 
-#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) && (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) && ((_WIN32_WINNT >= _WIN32_WINNT_WIN8) || (__WIL_RESOURCE_ENABLE_QUIRKS && (_WIN32_WINNT >= _WIN32_WINNT_WIN7)))
     enum class SlimEventType
     {
         AutoReset,
@@ -2911,21 +2934,25 @@ namespace wil
         }
 
         // Tries to create a named mutex -- returns false if unable to do so (gle may still be inspected with return=false)
-        bool try_create(_In_opt_ PCWSTR name, DWORD dwFlags = 0, DWORD desiredAccess = MUTEX_ALL_ACCESS, _In_opt_ PSECURITY_ATTRIBUTES pMutexAttributes = nullptr)
+        bool try_create(_In_opt_ PCWSTR name, DWORD dwFlags = 0, DWORD desiredAccess = MUTEX_ALL_ACCESS,
+                        _In_opt_ PSECURITY_ATTRIBUTES mutexAttributes = nullptr, _Out_opt_ bool* alreadyExists = nullptr)
         {
-            auto handle = ::CreateMutexExW(pMutexAttributes, name, dwFlags, desiredAccess);
+            auto handle = ::CreateMutexExW(mutexAttributes, name, dwFlags, desiredAccess);
             if (handle == nullptr)
             {
+                assign_to_opt_param(alreadyExists, false);
                 return false;
             }
+            assign_to_opt_param(alreadyExists, (::GetLastError() == ERROR_ALREADY_EXISTS));
             storage_t::reset(handle);
             return true;
         }
 
         // Returns HRESULT for unique_mutex_nothrow, void with exceptions for shared_mutex and unique_mutex
-        result create(_In_opt_ PCWSTR name = nullptr, DWORD dwFlags = 0, DWORD desiredAccess = MUTEX_ALL_ACCESS, _In_opt_ PSECURITY_ATTRIBUTES pMutexAttributes = nullptr)
+        result create(_In_opt_ PCWSTR name = nullptr, DWORD dwFlags = 0, DWORD desiredAccess = MUTEX_ALL_ACCESS,
+                      _In_opt_ PSECURITY_ATTRIBUTES mutexAttributes = nullptr, _Out_opt_ bool* alreadyExists = nullptr)
         {
-            return err_policy::LastErrorIfFalse(try_create(name, dwFlags, desiredAccess, pMutexAttributes));
+            return err_policy::LastErrorIfFalse(try_create(name, dwFlags, desiredAccess, mutexAttributes, alreadyExists));
         }
 
         // Tries to open a named mutex -- returns false if unable to do so (gle may still be inspected with return=false)
@@ -3002,21 +3029,23 @@ namespace wil
         }
 
         // Tries to create a named event -- returns false if unable to do so (gle may still be inspected with return=false)
-        bool try_create(LONG lInitialCount, LONG lMaximumCount, _In_opt_ PCWSTR name, DWORD desiredAccess = SEMAPHORE_ALL_ACCESS, _In_opt_ PSECURITY_ATTRIBUTES pSemaphoreAttributes = nullptr)
+        bool try_create(LONG lInitialCount, LONG lMaximumCount, _In_opt_ PCWSTR name, DWORD desiredAccess = SEMAPHORE_ALL_ACCESS, _In_opt_ PSECURITY_ATTRIBUTES pSemaphoreAttributes = nullptr, _Out_opt_ bool *alreadyExists = nullptr)
         {
             auto handle = ::CreateSemaphoreExW(pSemaphoreAttributes, lInitialCount, lMaximumCount, name, 0, desiredAccess);
             if (handle == nullptr)
             {
+                assign_to_opt_param(alreadyExists, false);
                 return false;
             }
+            assign_to_opt_param(alreadyExists, (::GetLastError() == ERROR_ALREADY_EXISTS));
             storage_t::reset(handle);
             return true;
         }
 
         // Returns HRESULT for unique_semaphore_nothrow, void with exceptions for shared_event and unique_event
-        result create(LONG lInitialCount, LONG lMaximumCount, _In_opt_ PCWSTR name = nullptr, DWORD desiredAccess = SEMAPHORE_ALL_ACCESS, _In_opt_ PSECURITY_ATTRIBUTES pSemaphoreAttributes = nullptr)
+        result create(LONG lInitialCount, LONG lMaximumCount, _In_opt_ PCWSTR name = nullptr, DWORD desiredAccess = SEMAPHORE_ALL_ACCESS, _In_opt_ PSECURITY_ATTRIBUTES pSemaphoreAttributes = nullptr, _Out_opt_ bool *alreadyExists = nullptr)
         {
-            return err_policy::LastErrorIfFalse(try_create(lInitialCount, lMaximumCount, name, desiredAccess, pSemaphoreAttributes));
+            return err_policy::LastErrorIfFalse(try_create(lInitialCount, lMaximumCount, name, desiredAccess, pSemaphoreAttributes, alreadyExists));
         }
 
         // Tries to open the named semaphore -- returns false if unable to do so (gle may still be inspected with return=false)
@@ -4233,6 +4262,14 @@ namespace wil
 #if !defined(NOWINABLE)
     typedef unique_any<HWINEVENTHOOK, decltype(&::UnhookWinEvent), ::UnhookWinEvent> unique_hwineventhook;
 #endif
+#if !defined(NOCLIPBOARD)
+    using unique_close_clipboard_call = unique_call<decltype(::CloseClipboard), &::CloseClipboard>;
+
+    inline unique_close_clipboard_call open_clipboard(HWND hwnd)
+    {
+        return unique_close_clipboard_call { OpenClipboard(hwnd) != FALSE };
+    }
+#endif
 #endif // __WIL__WINUSER_
 
 #if !defined(NOGDI) && !defined(NODESKTOP)
@@ -4793,6 +4830,7 @@ namespace wil
     typedef unique_any<HCRYPTPROV, decltype(&details::CryptReleaseContextNoParam), details::CryptReleaseContextNoParam> unique_hcryptprov;
     typedef unique_any<HCRYPTKEY, decltype(&::CryptDestroyKey), ::CryptDestroyKey> unique_hcryptkey;
     typedef unique_any<HCRYPTHASH, decltype(&::CryptDestroyHash), ::CryptDestroyHash> unique_hcrypthash;
+    typedef unique_any<HCRYPTMSG, decltype(&::CryptMsgClose), ::CryptMsgClose> unique_hcryptmsg;
 #endif // __WIL__WINCRYPT_H__
 #if defined(__WIL__WINCRYPT_H__) && !defined(__WIL__WINCRYPT_H__STL) && defined(WIL_RESOURCE_STL)
 #define __WIL__WINCRYPT_H__STL
@@ -4802,6 +4840,7 @@ namespace wil
     typedef shared_any<unique_hcryptprov> shared_hcryptprov;
     typedef shared_any<unique_hcryptkey> shared_hcryptkey;
     typedef shared_any<unique_hcrypthash> shared_hcrypthash;
+    typedef shared_any<unique_hcryptmsg> shared_hcryptmsg;
 
     typedef weak_any<shared_cert_context> weak_cert_context;
     typedef weak_any<shared_cert_chain_context> weak_cert_chain_context;
@@ -4809,6 +4848,7 @@ namespace wil
     typedef weak_any<shared_hcryptprov> weak_hcryptprov;
     typedef weak_any<shared_hcryptkey> weak_hcryptkey;
     typedef weak_any<shared_hcrypthash> weak_hcrypthash;
+    typedef weak_any<shared_hcryptmsg> weak_hcryptmsg;
 #endif // __WIL__WINCRYPT_H__STL
 
 
@@ -5361,6 +5401,14 @@ namespace wil
     typedef unique_any<HTHEME, decltype(&::CloseThemeData), ::CloseThemeData> unique_htheme;
 #endif // __WIL_INC_UXTHEME
 
+#pragma warning(push)
+#pragma warning(disable:4995)
+#if defined(_INC_USERENV) && !defined(__WIL_INC_USERENV) && WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) && !defined(WIL_KERNEL_MODE)
+#define __WIL_INC_USERENV
+    typedef unique_any<void*, decltype(&::DestroyEnvironmentBlock), ::DestroyEnvironmentBlock> unique_environment_block;
+#endif // __WIL_INC_USERENV
+#pragma warning(pop)
+
 #if defined(_WINSVC_) && !defined(__WIL_HANDLE_H_WINSVC) && WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) && !defined(WIL_KERNEL_MODE)
 #define __WIL_HANDLE_H_WINSVC
     typedef unique_any<SC_HANDLE, decltype(&::CloseServiceHandle), ::CloseServiceHandle> unique_schandle;
@@ -5383,6 +5431,16 @@ namespace wil
     typedef shared_any<unique_file> shared_file;
     typedef weak_any<unique_file> weak_file;
 #endif // __WIL__INC_STDIO_STL
+
+#if defined(_INC_LOCALE) && !defined(__WIL_INC_LOCALE) && !defined(WIL_KERNEL_MODE)
+#define __WIL_INC_LOCALE
+    typedef unique_any<_locale_t, decltype(&::_free_locale), ::_free_locale> unique_locale;
+#endif // __WIL_INC_LOCALE
+#if defined(__WIL_INC_LOCALE) && !defined(__WIL__INC_LOCALE_STL) && defined(WIL_RESOURCE_STL)
+#define __WIL__INC_LOCALE_STL
+    typedef shared_any<unique_locale> shared_locale;
+    typedef weak_any<unique_locale> weak_locale;
+#endif // __WIL__INC_LOCALE_STL
 
 #if defined(_NTLSA_) && !defined(__WIL_NTLSA_) && !defined(WIL_KERNEL_MODE)
 #define __WIL_NTLSA_
@@ -5739,54 +5797,382 @@ namespace wil
     using unique_wdf_wait_lock = unique_any_t<details::unique_wdf_wait_lock_storage>;
     using unique_wdf_spin_lock = unique_any_t<details::unique_wdf_spin_lock_storage>;
 
-    template<typename TWDFOBJECT>
-    struct wdf_object_reference
+    //! unique_wdf_object_reference is a RAII type for managing WDF object references acquired using
+    //! the WdfObjectReference* family of APIs. The behavior of this class is exactly identical to
+    //! wil::unique_any but a few methods have some WDF-object-reference-specific enhancements.
+    //!
+    //! * The constructor takes not only a WDFOBJECT-compatible type or a wil::unique_wdf_any, but
+    //!   optionally also a tag with which the reference was acquired.
+    //! * A get_tag() method is provided to retrieve the tag.
+    //! * reset() is similar to the constructor in that it also optionally takes a tag.
+    //! * release() optionally takes an out-param that returns the tag.
+    //!
+    //! These subtle differences make it impossible to reuse the wil::unique_any_t template for its implementation.
+    template<typename wdf_object_t>
+    class unique_wdf_object_reference
     {
-        TWDFOBJECT wdfObject = WDF_NO_HANDLE;
-        PVOID tag = nullptr;
+    public:
+        unique_wdf_object_reference() WI_NOEXCEPT = default;
 
-        wdf_object_reference() WI_NOEXCEPT = default;
-
-        wdf_object_reference(TWDFOBJECT wdfObject, PVOID tag = nullptr) WI_NOEXCEPT
-            : wdfObject(wdfObject), tag(tag)
+        //! Wrap a WDF object reference that has already been acquired into this RAII type. If you
+        //! want to acquire a new reference instead, use WI_WdfObjectReferenceIncrement.
+        explicit unique_wdf_object_reference(wdf_object_t wdfObject, void* tag = nullptr) WI_NOEXCEPT
+            : m_wdfObject(wdfObject), m_tag(tag)
         {
         }
 
-        operator TWDFOBJECT() const WI_NOEXCEPT
+        //! This is similar to the constructor that takes a raw WDF handle but is enlightened to
+        //! take a const-ref to a wil::unique_wdf_any<> instead, obviating the need to call .get()
+        //! on it. As with the other constructor, the expectation is that the raw reference has
+        //! already been acquired and ownership is being transferred into this RAII object.
+        explicit unique_wdf_object_reference(const wil::unique_wdf_any<wdf_object_t>& wdfObject, void* tag = nullptr) WI_NOEXCEPT
+            : unique_wdf_object_reference(wdfObject.get(), tag)
         {
+        }
+
+        unique_wdf_object_reference(const unique_wdf_object_reference&) = delete;
+        unique_wdf_object_reference& operator=(const unique_wdf_object_reference&) = delete;
+
+        unique_wdf_object_reference(unique_wdf_object_reference&& other)
+            : m_wdfObject(other.m_wdfObject), m_tag(other.m_tag)
+        {
+            other.m_wdfObject = WDF_NO_HANDLE;
+            other.m_tag = nullptr;
+        }
+
+        unique_wdf_object_reference& operator=(unique_wdf_object_reference&& other)
+        {
+            if (this != wistd::addressof(other))
+            {
+                reset(other.m_wdfObject, other.m_tag);
+                other.m_wdfObject = WDF_NO_HANDLE;
+                other.m_tag = nullptr;
+            }
+
+            return *this;
+        }
+
+        ~unique_wdf_object_reference() WI_NOEXCEPT
+        {
+            reset();
+        }
+
+        explicit operator bool() const WI_NOEXCEPT
+        {
+            return m_wdfObject != WDF_NO_HANDLE;
+        }
+
+        wdf_object_t get() const WI_NOEXCEPT
+        {
+            return m_wdfObject;
+        }
+
+        void* get_tag() const WI_NOEXCEPT
+        {
+            return m_tag;
+        }
+
+        //! Replaces the current instance (releasing it if it exists) with a new WDF object
+        //! reference that has already been acquired by the caller.
+        void reset(wdf_object_t wdfObject = WDF_NO_HANDLE, void* tag = nullptr) WI_NOEXCEPT
+        {
+            if (m_wdfObject != WDF_NO_HANDLE)
+            {
+                // We don't use WdfObjectDereferenceActual because there is no way to provide the
+                // correct __LINE__ and __FILE__, but if you use RAII all the way, you shouldn't have to
+                // worry about where it was released, only where it was acquired.
+                WdfObjectDereferenceWithTag(m_wdfObject, m_tag);
+            }
+
+            m_wdfObject = wdfObject;
+            m_tag = tag;
+        }
+
+        void reset(const wil::unique_wdf_any<wdf_object_t>& wdfObject, void* tag = nullptr) WI_NOEXCEPT
+        {
+            reset(wdfObject.get(), tag);
+        }
+
+        wdf_object_t release(_Outptr_opt_ void** tag = nullptr) WI_NOEXCEPT
+        {
+            const auto wdfObject = m_wdfObject;
+            wil::assign_to_opt_param(tag, m_tag);
+            m_wdfObject = WDF_NO_HANDLE;
+            m_tag = nullptr;
             return wdfObject;
         }
 
-        static void close(const wdf_object_reference& wdfObjectReference) WI_NOEXCEPT
+        void swap(unique_wdf_object_reference& other) WI_NOEXCEPT
         {
-            // We don't use WdfObjectDereferenceActual because there is no way to provide the
-            // correct __LINE__ and __FILE__, but if you use RAII all the way, you shouldn't have to
-            // worry about where it was released, only where it was acquired.
-            WdfObjectDereferenceWithTag(wdfObjectReference.wdfObject, wdfObjectReference.tag);
+            wistd::swap_wil(m_wdfObject, other.m_wdfObject);
+            wistd::swap_wil(m_tag, other.m_tag);
         }
+
+        //! Drops the current reference if any, and returns a pointer to a WDF handle which can
+        //! receive a newly referenced WDF handle. The tag is assumed to be nullptr. If a different
+        //! tag needs to be used, a temporary variable will need to be used to receive the WDF
+        //! handle and a unique_wdf_object_reference will need to be constructed with it.
+        //!
+        //! The quintessential use-case for this method is WdfIoQueueFindRequest.
+        wdf_object_t* put() WI_NOEXCEPT
+        {
+            reset();
+            return &m_wdfObject;
+        }
+
+        wdf_object_t* operator&() WI_NOEXCEPT
+        {
+            return put();
+        }
+
+    private:
+        wdf_object_t m_wdfObject = WDF_NO_HANDLE;
+        void* m_tag = nullptr;
     };
 
-    template<typename TWDFOBJECT>
-    using unique_wdf_object_reference = unique_any<TWDFOBJECT, decltype(wdf_object_reference<TWDFOBJECT>::close),
-        &wdf_object_reference<TWDFOBJECT>::close, details::pointer_access_noaddress, wdf_object_reference<TWDFOBJECT>>;
-
-    // Increment the ref-count on a WDF object a unique_wdf_object_reference for it. Use
+    // Increment the ref-count on a WDF object and return a unique_wdf_object_reference for it. Use
     // WI_WdfObjectReferenceIncrement to automatically use the call-site source location. Use this
     // function only if the call-site source location is obtained from elsewhere (i.e., plumbed
     // through other abstractions).
-    template<typename TWDFOBJECT>
-    inline WI_NODISCARD unique_wdf_object_reference<TWDFOBJECT> wdf_object_reference_increment(
-        TWDFOBJECT wdfObject, PVOID tag, LONG lineNumber, PCSTR fileName) WI_NOEXCEPT
+    template<typename wdf_object_t>
+    inline WI_NODISCARD unique_wdf_object_reference<wdf_object_t> wdf_object_reference_increment(
+        wdf_object_t wdfObject, PVOID tag, LONG lineNumber, PCSTR fileName) WI_NOEXCEPT
     {
         // Parameter is incorrectly marked as non-const, so the const-cast is required.
         ::WdfObjectReferenceActual(wdfObject, tag, lineNumber, const_cast<char*>(fileName));
-        return unique_wdf_object_reference<TWDFOBJECT>{ wdf_object_reference<TWDFOBJECT>{ wdfObject, tag } };
+        return unique_wdf_object_reference<wdf_object_t>{ wdfObject, tag };
+    }
+
+    template<typename wdf_object_t>
+    inline WI_NODISCARD unique_wdf_object_reference<wdf_object_t> wdf_object_reference_increment(
+        const wil::unique_wdf_any<wdf_object_t>& wdfObject, PVOID tag, LONG lineNumber, PCSTR fileName) WI_NOEXCEPT
+    {
+        return wdf_object_reference_increment(wdfObject.get(), tag, lineNumber, fileName);
     }
 
 // A macro so that we can capture __LINE__ and __FILE__.
 #define WI_WdfObjectReferenceIncrement(wdfObject, tag) \
     wil::wdf_object_reference_increment(wdfObject, tag, __LINE__, __FILE__)
 
+    //! wdf_request_completer is a unique_any-like RAII class for managing completion of a
+    //! WDFREQUEST. On destruction or explicit reset() it completes the WDFREQUEST with parameters
+    //! (status, information, priority boost) previously set using methods on this class.
+    //!
+    //! This class does not use the unique_any_t template primarily because the release() and put()
+    //! methods need to return a WDFREQUEST/WDFREQUEST*, as opposed to the internal storage type.
+    class wdf_request_completer
+    {
+    public:
+
+        explicit wdf_request_completer(WDFREQUEST wdfRequest = WDF_NO_HANDLE) WI_NOEXCEPT
+            : m_wdfRequest(wdfRequest)
+        {
+        }
+
+        wdf_request_completer(const wdf_request_completer&) = delete;
+        wdf_request_completer& operator=(const wdf_request_completer&) = delete;
+
+        wdf_request_completer(wdf_request_completer&& other) WI_NOEXCEPT
+            : m_wdfRequest(other.m_wdfRequest), m_status(other.m_status), m_information(other.m_information),
+#if defined(WIL_KERNEL_MODE)
+              m_priorityBoost(other.m_priorityBoost),
+#endif
+              m_completionFlags(other.m_completionFlags)
+        {
+            clear_state(other);
+        }
+
+        wdf_request_completer& operator=(wdf_request_completer&& other) WI_NOEXCEPT
+        {
+            if (this != wistd::addressof(other))
+            {
+                reset();
+                m_wdfRequest = other.m_wdfRequest;
+                m_status = other.m_status;
+                m_information = other.m_information;
+#if defined(WIL_KERNEL_MODE)
+                m_priorityBoost = other.m_priorityBoost;
+#endif
+                m_completionFlags = other.m_completionFlags;
+                clear_state(other);
+            }
+
+            return *this;
+        }
+
+        ~wdf_request_completer() WI_NOEXCEPT
+        {
+            reset();
+        }
+
+        WDFREQUEST get() const WI_NOEXCEPT
+        {
+            return m_wdfRequest;
+        }
+
+        //! Set the NTSTATUS value with with the WDFREQUEST will be completed when the RAII object
+        //! goes out of scope or .reset() is called explicitly. Calling this method does *not*
+        //! complete the request right away. No effect if this object currently does not have
+        //! ownership of a WDFREQUEST. The expected usage pattern is that set_status() is called
+        //! only after ownership of a WDFREQUEST is transferred to this object.
+        void set_status(NTSTATUS status) WI_NOEXCEPT
+        {
+            // The contract is that this method has no effect if we currently do not have a
+            // m_wdfRequest. But that is enforced by discarding all state when a WDFREQUEST is
+            // attached, not by explicitly checking for that condition here.
+
+            m_status = status;
+        }
+
+        //! Set the IO_STATUS_BLOCK.Information value with which the WDFREQUEST will be completed.
+        //! Note that the Information value is not stored directly in the WDFREQUEST using
+        //! WdfRequestSetInformation. It is only used at the time of completion. No effect if this
+        //! object currently does not have ownership of a WDFREQUEST. The expected usage pattern is
+        //! that set_information() is called only after ownership of a WDFREQUEST is transferred to
+        //! this object.
+        void set_information(ULONG_PTR information) WI_NOEXCEPT
+        {
+            // The contract is that this method has no effect if we currently do not have a
+            // m_wdfRequest. But that is enforced by discarding all state when a WDFREQUEST is
+            // attached, not by explicitly checking for that condition here.
+
+            m_completionFlags.informationSet = 1;
+            m_information = information;
+        }
+
+#if defined(WIL_KERNEL_MODE)
+        //! Set the priority boost with which the WDFREQUEST will be completed. If this method is
+        //! called, the WDFREQUEST will eventually be completed with
+        //! WdfRequestCompleteWithPriorityBoost. No effect if this object currently does not have
+        //! ownership of a WDFREQUEST. The expected usage pattern is that set_priority_boost() is
+        //! called only after ownership of a WDFREQUEST is transferred to this object.
+        void set_priority_boost(CCHAR priorityBoost) WI_NOEXCEPT
+        {
+            // The contract is that this method has no effect if we currently do not have a
+            // m_wdfRequest. But that is enforced by discarding all state when a WDFREQUEST is
+            // attached, not by explicitly checking for that condition here.
+
+            m_completionFlags.priorityBoostSet = 1;
+            m_priorityBoost = priorityBoost;
+        }
+#endif
+
+        explicit operator bool() const WI_NOEXCEPT
+        {
+            return m_wdfRequest != WDF_NO_HANDLE;
+        }
+
+        WDFREQUEST* put() WI_NOEXCEPT
+        {
+            reset();
+            return &m_wdfRequest;
+        }
+
+        WDFREQUEST* operator&() WI_NOEXCEPT
+        {
+            return put();
+        }
+
+        //! Relinquishes completion responsibility for the WDFREQUEST. Note that any state
+        //! (information, priority boost, status) set on this object is lost. This design choice was
+        //! made because it is atypical to set an information or priority boost value upfront; they
+        //! are typically set at the point where the request is going to be completed. Hence a
+        //! use-case wherein release() is called will typically not have set an information or
+        //! priority boost.
+        WDFREQUEST release() WI_NOEXCEPT
+        {
+            const auto wdfRequest = m_wdfRequest;
+            clear_state(*this);
+            return wdfRequest;
+        }
+
+        void swap(wdf_request_completer& other) WI_NOEXCEPT
+        {
+            wistd::swap_wil(m_wdfRequest, other.m_wdfRequest);
+            wistd::swap_wil(m_information, other.m_information);
+            wistd::swap_wil(m_status, other.m_status);
+#if defined(WIL_KERNEL_MODE)
+            wistd::swap_wil(m_priorityBoost, other.m_priorityBoost);
+#endif
+            wistd::swap_wil(m_completionFlags, other.m_completionFlags);
+        }
+
+        void reset(WDFREQUEST newWdfRequest = WDF_NO_HANDLE)
+        {
+            if (m_wdfRequest != WDF_NO_HANDLE)
+            {
+                // We try to match the usage patterns that the driver would have typically used in the
+                // various scenarios. For instance, if the driver has set the information field, we'll
+                // call WdfRequestCompleteWithInformation instead of calling WdfRequestSetInformation
+                // followed by WdfRequestComplete.
+
+#if defined(WIL_KERNEL_MODE)
+                if (m_completionFlags.priorityBoostSet)
+                {
+                    if (m_completionFlags.informationSet)
+                    {
+                        WdfRequestSetInformation(m_wdfRequest, m_information);
+                    }
+
+                    WdfRequestCompleteWithPriorityBoost(m_wdfRequest, m_status, m_priorityBoost);
+                }
+                else
+#endif
+                if (m_completionFlags.informationSet)
+                {
+                    WdfRequestCompleteWithInformation(m_wdfRequest, m_status, m_information);
+                }
+                else
+                {
+                    WdfRequestComplete(m_wdfRequest, m_status);
+                }
+            }
+
+            // We call clear_state unconditionally just in case some parameters (status,
+            // information, etc.) were set prior to attaching a WDFREQUEST to this object. Those
+            // parameters are not considered relevant to the WDFREQUEST being attached to this
+            // object now.
+            clear_state(*this, newWdfRequest);
+        }
+
+    private:
+
+        static void clear_state(wdf_request_completer& completer, WDFREQUEST newWdfRequest = WDF_NO_HANDLE) WI_NOEXCEPT
+        {
+            completer.m_wdfRequest = newWdfRequest;
+            completer.m_status = STATUS_UNSUCCESSFUL;
+            completer.m_information = 0;
+#if defined(WIL_KERNEL_MODE)
+            completer.m_priorityBoost = 0;
+#endif
+            completer.m_completionFlags = {};
+        }
+
+        // Members are ordered in decreasing size to minimize padding.
+
+        WDFREQUEST m_wdfRequest = WDF_NO_HANDLE;
+
+        // This will not be used unless m_completionFlags.informationSet is set.
+        ULONG_PTR m_information = 0;
+
+        // There is no reasonably default NTSTATUS value. Callers are expected to explicitly set a
+        // status value at the point where it is decided that the request needs to be completed.
+        NTSTATUS m_status = STATUS_UNSUCCESSFUL;
+
+// UMDF does not support WdfRequestCompleteWithPriorityBoost.
+#if defined(WIL_KERNEL_MODE)
+        // This will not be used unless m_completionFlags.priorityBoostSet is set.
+        CCHAR m_priorityBoost = 0;
+#endif
+
+        struct
+        {
+            UINT8 informationSet : 1;
+#if defined(WIL_KERNEL_MODE)
+            UINT8 priorityBoostSet : 1;
+#endif
+        } m_completionFlags = {};
+    };
 #endif
 
 #if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) && \
@@ -6481,6 +6867,187 @@ namespace wil
 #endif // WI_RESOURCE_STL
 
 #endif // __WIL_MSCAT
+
+
+#if !defined(__WIL_RESOURCE_LOCK_ENFORCEMENT)
+#define __WIL_RESOURCE_LOCK_ENFORCEMENT
+
+    /**
+    Functions that need an exclusive lock use can use write_lock_required as a parameter to enforce lock
+    safety at compile time. Similarly, read_lock_required may stand as a parameter where shared ownership
+    of a lock is required. These are empty structs that will never be used, other than passing them on to
+    another function that requires them.
+
+    These types are implicitly convertible from various lock holding types, enabling callers to provide them as
+    proof of the lock that they hold.
+
+    The following example is intentially contrived to demonstrate multiple use cases:
+      - Methods that require only shared/read access
+      - Methods that require only exclusive write access
+      - Methods that pass their proof-of-lock to a helper
+    ~~~
+        class RemoteControl
+        {
+        public:
+            void VolumeUp();
+            int GetVolume();
+        private:
+            int GetCurrentVolume(wil::read_lock_required);
+            void AdjustVolume(int delta, wil::write_lock_required);
+            void SetNewVolume(int newVolume, wil::write_lock_required);
+
+            int m_currentVolume = 0;
+            wil::srwlock m_lock;
+        };
+
+        void RemoteControl::VolumeUp()
+        {
+            auto writeLock = m_lock.lock_exclusive();
+            AdjustVolume(1, writeLock);
+        }
+
+        int RemoteControl::GetVolume()
+        {
+            auto readLock = m_lock.lock_shared();
+            return GetCurrentVolume(readLock);
+        }
+
+        int RemoteControl::GetCurrentVolume(wil::read_lock_required)
+        {
+            return m_currentVolume;
+        }
+
+        void AdjustVolume(int delta, wil::write_lock_required lockProof)
+        {
+            const auto currentVolume = GetCurrentVolume(lockProof);
+            SetNewVolume(currentVolume + delta, lockProof);
+        }
+
+        void RemoteControl::SetNewVolume(int newVolume, wil::write_lock_required)
+        {
+            m_currentVolume = newVolume;
+        }
+    ~~~
+
+    In this design it is impossible to not meet the "lock must be held" precondition and the function parameter types
+    help you understand which one.
+
+    Cases not handled:
+      - Functions that need the lock held, but fail to specify this fact by requiring a lock required parameter need
+        to be found via code inspection.
+      - Recursively taking a lock, when it is already held, is not avoided in this pattern
+        - Readers will learn to be suspicious of acquiring a lock in functions with lock required parameters.
+      - Designs with multiple locks, that must be careful to take them in the same order every time, are not helped
+        by this pattern.
+      - Locking the wrong object
+      - Use of a std::lock type that has not actually be secured yet (such as by std::try_to_lock or std::defer_lock)
+        - or use of a lock type that had been acquired but has since been released, reset, or otherwise unlocked
+
+    These utility types are not fool-proof against all lock misuse, anti-patterns, or other complex yet valid
+    scenarios. However on the net, their usage in typical cases can assist in creating clearer, self-documenting
+    code that catches the common issues of forgetting to hold a lock or forgetting whether a lock is required to
+    call another method safely.
+    */
+    struct write_lock_required;
+
+    /**
+    Stands as proof that a shared lock has been acquired. See write_lock_required for more information.
+    */
+    struct read_lock_required;
+
+    namespace details
+    {
+        // Only those lock types specialized by lock_proof_traits will allow either a write_lock_required or
+        // read_lock_required to be constructed. The allows_exclusive value indicates if the type represents an exclusive,
+        // write-safe lock aquisition, or a shared, read-only lock acquisition.
+        template<typename T>
+        struct lock_proof_traits { };
+
+        // Base for specializing lock_proof_traits where the lock type is shared
+        struct shared_lock_proof
+        {
+            static constexpr bool allows_shared = true;
+        };
+
+        // Base for specializing lock_proof_traits where the lock type is exclusive (super-set of shared_lock_proof)
+        struct exclusive_lock_proof : shared_lock_proof
+        {
+            static constexpr bool allows_exclusive = true;
+        };
+    }
+
+    struct write_lock_required
+    {
+        /**
+        Construct a new write_lock_required object for use as proof that an exclusive lock has been acquired.
+        */
+        template <typename TLockProof>
+        write_lock_required(const TLockProof&, wistd::enable_if_t<details::lock_proof_traits<TLockProof>::allows_exclusive, int> = 0) {}
+
+        write_lock_required() = delete; // No default construction
+    };
+
+    struct read_lock_required
+    {
+        /**
+        Construct a new read_lock_required object for use as proof that a shared lock has been acquired.
+        */
+        template <typename TLockProof>
+        read_lock_required(const TLockProof&, wistd::enable_if_t<details::lock_proof_traits<TLockProof>::allows_shared, int> = 0) {}
+
+        /**
+        Uses a prior write_lock_required object to construct a read_lock_required object as proof that at shared lock
+        has been acquired. (Exclusive locks held are presumed to suffice for proof of a read lock)
+        */
+        read_lock_required(const write_lock_required&) {}
+
+        read_lock_required() = delete; // No default construction
+    };
+#endif // __WIL_RESOURCE_LOCK_ENFORCEMENT
+
+#if defined(__WIL_WINBASE_) && !defined(__WIL__RESOURCE_LOCKPROOF_WINBASE) && defined(__WIL_RESOURCE_LOCK_ENFORCEMENT)
+#define __WIL__RESOURCE_LOCKPROOF_WINBASE
+
+    namespace details
+    {
+        // Specializations for srwlock
+        template<>
+        struct lock_proof_traits<rwlock_release_shared_scope_exit> : shared_lock_proof {};
+
+        template<>
+        struct lock_proof_traits<rwlock_release_exclusive_scope_exit> : exclusive_lock_proof {};
+
+        // Specialization for critical_section
+        template<>
+        struct lock_proof_traits<cs_leave_scope_exit> : exclusive_lock_proof {};
+    }
+
+#endif //__WIL__RESOURCE_LOCKPROOF_WINBASE
+
+#if defined(_MUTEX_) && !defined(__WIL__RESOURCE_LOCKPROOF_MUTEX) && defined(__WIL_RESOURCE_LOCK_ENFORCEMENT)
+#define __WIL__RESOURCE_LOCKPROOF_MUTEX
+
+    namespace details
+    {
+        template<typename TMutex>
+        struct lock_proof_traits<std::unique_lock<TMutex>> : exclusive_lock_proof {};
+
+        template<typename TMutex>
+        struct lock_proof_traits<std::lock_guard<TMutex>> : exclusive_lock_proof {};
+    }
+
+#endif //__WIL__RESOURCE_LOCKPROOF_MUTEX
+
+#if defined(_SHARED_MUTEX_) && !defined(__WIL__RESOURCE_LOCKPROOF_SHAREDMUTEX) && defined(__WIL_RESOURCE_LOCK_ENFORCEMENT)
+#define __WIL__RESOURCE_LOCKPROOF_SHAREDMUTEX
+
+    namespace details
+    {
+        template<typename TMutex>
+        struct lock_proof_traits<std::shared_lock<TMutex>> : shared_lock_proof {};
+    }
+
+#endif //__WIL__RESOURCE_LOCKPROOF_SHAREDMUTEX
 
 } // namespace wil
 

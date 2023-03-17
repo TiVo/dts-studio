@@ -42,9 +42,15 @@ if (${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
     append_cxx_flag("-Wno-self-assign-overloaded")
     append_cxx_flag("-Wno-self-move")
 
+    # C++/WinRT does not declare 'override' in a number of places
+    append_cxx_flag("-Wno-inconsistent-missing-override")
+
     # clang-cl does not understand the /permissive- flag (or at least it opts to ignore it). We can achieve similar
     # results through the following flags.
     append_cxx_flag("-fno-delayed-template-parsing")
+
+    # clang-cl needs this to enable _InterlockedCompareExchange128
+    append_cxx_flag("-mcx16")
 
     # NOTE: Windows headers not clean enough for us to realistically attempt to start fixing these errors yet. That
     # said, errors that originate from WIL headers may benefit
